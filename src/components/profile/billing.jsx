@@ -1,6 +1,5 @@
 import React from "react";
 import Button from "../global/button.jsx";
-import Reminder from "../global/reminder.jsx";
 import PaymentCardIcon from "../global/payment-card-icon.jsx";
 import OrderCard from "../global/order-card.jsx";
 import ChangePaymentMethodModal from "./change-payment-method-modal";
@@ -42,7 +41,6 @@ class Billing extends React.Component {
             </div>
           </div>
         )}
-        <Reminder content="Keep in mind changes you make to your delivery amount, frequency and next delivery date will only affect your next delivery" />
         <div className="flex my-6">
           <PaymentCardIcon icon="visa" />
           <span className="inline-block ml-3">Visa ending in {ccLastFour}</span>
