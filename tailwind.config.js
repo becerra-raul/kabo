@@ -15,7 +15,7 @@ module.exports = {
         primary: '#239C6D',
         account: '#F2F5F4',
         promptYellow: '#FFF5E7',
-        recipeGray: '#E5E5E5',
+        recipeGray: '#F2F5F4',
         chicken: '#FF9C63',
         beef: '#239C6D',
         turkey: '#875D45',
@@ -30,7 +30,7 @@ module.exports = {
         green: '#239C6D',
       },
       borderRadius: {
-        '1lg': '0.625rem'
+        '1lg': '0.625rem',
       },
       margin: {
         1.3: '0.312rem',
@@ -45,15 +45,18 @@ module.exports = {
       },
       width: {
         7.3: '1.875rem',
-        13: '3.25rem'
-      }
+        13: '3.25rem',
+      },
     },
     fontFamily: {
       messina: ['Messinasans, sans-serif'],
-      cooper: ['Coooper Lt Bt', 'sans-serif'],
+      cooper: ['Coooper', 'sans-serif'],
     },
     container: {
       center: true,
+      screens: {
+        xl: '1280px',
+      },
     },
   },
   variants: {

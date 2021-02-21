@@ -117,3 +117,16 @@
     display: none;
   }
 }
+
+@font-face {
+  font-family: 'Cooper';
+  font-style: 'sans serif';
+  font-weight: 600;
+  src: url('../../fonts/Bitstream-Cooper-Lt-BT-Bold.ttf'); /* IE9 Compat Modes */
+  src: local('Cooper Lt BT Bold'), local('Cooper Lt Bt Bold'),
+       url('../../fonts/Bitstream-Cooper-Lt-BT-Bold.ttf') format('embedded-opentype'), /* IE6-IE8 */
+       url('../../fonts/Bitstream-Cooper-Lt-BT-Bold.ttf') format('truetype'), /* Super Modern Browsers */
+       url('../../fonts/Bitstream-Cooper-Lt-BT-Bold.ttf') format('truetype'), /* Modern Browsers */
+       url('../../fonts/Bitstream-Cooper-Lt-BT-Bold.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../../fonts/Bitstream-Cooper-Lt-BT-Bold.ttf') format('svg'); /* Legacy iOS */
+}

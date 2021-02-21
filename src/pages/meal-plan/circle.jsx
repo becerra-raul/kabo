@@ -2,8 +2,8 @@ import React from "react"
 
 export const CircleSVG = ({ num }) => (
   <svg
-    height="60"
-    width="60"
+    height="100%"
+    width="100%"
     viewBox="0 0 60 60"
     style={{ marginBottom: '1rem' }}
     xmlns="http://www.w3.org/2000/svg"

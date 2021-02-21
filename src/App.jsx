@@ -15,7 +15,7 @@ import OrderDetail from "./pages/order/detail"
 function App() {
 
   return (
-    <div className="h-screen container sm-container">
+    <div className="h-screen container mx-auto sm-container">
 
       <Navbar />
       <Alert />

@@ -83,6 +83,7 @@ class EditPlan extends Component {
   };
 
   selectedDietPortion = (diet) => {
+    console.log(diet)
     this.setState({ dietPortion: diet });
   };
 
@@ -115,8 +116,9 @@ class EditPlan extends Component {
       const { cookedRecipes, kibble, dietPortion, dog } = this.state;
       const data = {
         dog_id: dog.id,
-        cooked_portion: dietPortion.cooked_portion,
-        kibble_portion: dietPortion.kibble_portion,
+        cooked_portion: dietPortion.cooked_portion || null,
+        kibble_portion: dietPortion.kibble_portion || null,
+        portion_adjusment: dietPortion.portion_adjusment || null
       };
       if (kibble && kibble.length > 0) {
         data.kibble_recipe = kibble[0];
@@ -141,8 +143,9 @@ class EditPlan extends Component {
     const { cookedRecipes, kibble, dietPortion, dog } = this.state;
     const data = {
       dog_id: dog.id,
-      cooked_portion: dietPortion.cooked_portion,
-      kibble_portion: dietPortion.kibble_portion,
+      cooked_portion: dietPortion.cooked_portion || null,
+      kibble_portion: dietPortion.kibble_portion || null,
+      portion_adjusment: dietPortion.portion_adjusment || null
     };
     if (kibble && kibble.length > 0) {
       data.kibble_recipe = kibble[0];
@@ -191,6 +194,7 @@ class EditPlan extends Component {
         {step > 1 && (
           <ConfirmMeal
             dog={dog}
+            user={user}
             open={true}
             cookedRecipes={cookedRecipes}
             index={this.props.match.params.id}
@@ -204,7 +208,7 @@ class EditPlan extends Component {
         }
 
 
-        <div className="w-full flex flex-col py-3 bg-white items-center">
+        <div className="w-full flex flex-col py-3 bg-white items-center fixed bottom-0">
           <div className="inline-flex">
             {step !== 0 && (
               <button

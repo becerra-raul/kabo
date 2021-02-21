@@ -16,19 +16,17 @@ import turkeyIcon from '../../assets/images/recipe/turkey-recipe.png'
 const MealIcon = ({ source, notFirst }) => (
   <img
     src={source}
-    className={`h-12 rounded-full ${notFirst && '-ml-10'}`}
+    className={`h-12 rounded-full  ${notFirst && '-ml-10'}`}
     alt=""
   />
 )
 
-const ConfirmMeal = ({ dog, subs, onConfirm, cookedRecipes, kibble, portion, open, onClose, estimate }) => {
+const ConfirmMeal = ({ dog, subs, onConfirm, cookedRecipes, kibble, portion, open, onClose, estimate, user }) => {
   if (!dog.chargebee_subscription_id) return null
   let cbID = dog.chargebee_subscription_id
   let subData = subs.[cbID]
   let totalReadable = (subData.invoice_estimate_total / 100).toFixed(2)
-  console.log(cbID)
-  console.log(Object.keys(subs)[1])
-  console.log(estimate)
+  const { cooked_recipes, kibble_recipes } = user
   let recipeArray = []
   let iconArray = []
 
@@ -40,25 +38,31 @@ const ConfirmMeal = ({ dog, subs, onConfirm, cookedRecipes, kibble, portion, ope
   if (findString(cookedRecipes, 'beef')) {
     recipeArray.push('Savoury Beef')
     iconArray.push(
-      <MealIcon key="beef_recipe" notFirst={iconArray.length > 0} source={beefIcon} />
+      <MealIcon key="beef_recipe" notFirst={iconArray.length > 0} source={cooked_recipes[1].image_url} />
     )
   }
-  if (findString(cookedRecipes, 'chicken')) {
+  if (findString(cookedRecipes, 'chicken ')) {
     recipeArray.push('Tender Chicken')
     iconArray.push(
-      <MealIcon key="chicken_recipe" notFirst={iconArray.length > 0} source={chickenIcon} />
+      <MealIcon key="chicken_recipe" notFirst={iconArray.length > 0} source={cooked_recipes[0].image_url} />
     )
   }
   if (findString(cookedRecipes, 'lamb')) {
-    recipeArray.push('Luscious Lamb')
+    recipeArray.push('Luscious Lamb ')
     iconArray.push(
-      <MealIcon key="lamb_recipe" notFirst={iconArray.length > 0} source={lambIcon} />
+      <MealIcon key="lamb_recipe" notFirst={iconArray.length > 0} source={cooked_recipes[3].image_url} />
     )
   }
-  if (findString(cookedRecipes, 'turkey')) {
+  if (findString(cookedRecipes, 'turkey ')) {
     recipeArray.push('hearty Turkey')
     iconArray.push(
-      <MealIcon key="turkey_recipe" notFirst={iconArray.length > 0} source={turkeyIcon} />
+      <MealIcon key="turkey_recipe" notFirst={iconArray.length > 0} source={cooked_recipes[2].image_url} />
+    )
+  }
+  if (kibble) {
+    recipeArray.push(`${kibble} kibble`)
+    iconArray.push(
+      <MealIcon key="turkey_recipe" notFirst={iconArray.length > 0} source={kibble_recipes[0].image_url} />
     )
   }
 
@@ -79,8 +83,9 @@ const ConfirmMeal = ({ dog, subs, onConfirm, cookedRecipes, kibble, portion, ope
         <div className="p-4">
           <div className="font-messina text-xl font-semibold">
             Please confirm meal plan updates
-            <div>
+            <div className="flex">
               {iconArray}
+              {recipeArray}
             </div>
           </div>
 
