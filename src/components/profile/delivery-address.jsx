@@ -1,10 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { userActions } from '../../actions/index.js'
-import Button from '../global/button.jsx'
 
 import Input from '../global/input.jsx'
-import Reminder from '../global/reminder.jsx'
 
 class DeliveryAddress extends React.Component {
   constructor(props) {
@@ -64,7 +62,6 @@ class DeliveryAddress extends React.Component {
         <div className="flex-auto text-2xl font-cooper mb-6">
           Delivery Address
         </div>
-        <Reminder content="Keep in mind you will be billed every 4 weeks" styles="mb-4" />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
           <Input required name="FIRST NAME" onChange={(e) => this.changeAddress(e, 'first_name')} inputValue={deliveryAddress.first_name} />
           <Input required name="LAST NAME" onChange={(e) => this.changeAddress(e, 'last_name')} inputValue={deliveryAddress.last_name} />
