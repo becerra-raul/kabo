@@ -10,11 +10,14 @@ const DailyDietPortion = ({
   cookedRecipes,
   selectedDietPortion,
   getDailyDietPortion,
+  kibbleRecipes
 }) => {
+  console.log(kibbleRecipes)
   useEffect(() => {
     const data = {
       cooked_recipes: cookedRecipes,
       dog_id: dog.id,
+      kibble_recipe: kibbleRecipes[0]
     };
     getDailyDietPortion(data);
     // console.log("Daily Diet Portion is loaded");

@@ -5,7 +5,6 @@ import { Field, reduxForm } from 'redux-form'
 import { ReactComponent as SelectDown } from '../../assets/images/select-down.svg'
 import { connect } from 'react-redux';
 import { userActions } from '../../actions/index.js';
-import moment from 'moment'
 
 class FrequencyModal extends React.Component {
   constructor(props) {
@@ -31,7 +30,7 @@ class FrequencyModal extends React.Component {
     let submitData = {
       amount_of_food: event.target[0].value,
       how_often: event.target[1].value,
-      starting_date: moment.unix(event.target[2].value).format('YYYY-MM-DD')
+      starting_date: event.target[2].value
     }
     this.props.updateDelivery(submitData)
   }

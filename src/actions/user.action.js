@@ -25,6 +25,11 @@ const getSubscriptionEstimate = (data) => ({
   payload: data,
 });
 
+const unpauseSubscription = (data) => ({
+  type: userConstants.UNPAUSE_SUBSCRIPTION_REQUESTED,
+  payload: data,
+});
+
 const cancelSubscription = (userID) => ({
   type: userConstants.CANCEL_SUBSCRIPTION_REQUESTED,
   payload: userID,
@@ -83,6 +88,7 @@ const skipDogDelivery = (id) => ({
 export const userActions = {
   getAccountData,
   pauseSubscription,
+  unpauseSubscription,
   cancelSubscription,
   getRecipeData,
   getSubscriptionData,

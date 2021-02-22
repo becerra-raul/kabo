@@ -17,6 +17,7 @@ const SkipDeliveryModal = ({
   skipDogDelivery,
 }) => {
   const getNextDeliveryDates = () => {
+    console.log(portion)
     return (
       User.delivery_starting_date_options &&
       User.delivery_starting_date_options.map((item) => {
@@ -32,7 +33,7 @@ const SkipDeliveryModal = ({
     <Modal
       isOpen={isOpen}
       onRequestClose={toggle}
-      title={`Skip ${portion.name} Meal Plan`}
+    // title={`Skip ${portion.name} Meal Plan`}
     >
       {skipping_dog_delivery && <LoadingCircle />}
 

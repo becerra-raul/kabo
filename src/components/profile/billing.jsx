@@ -3,6 +3,7 @@ import Button from "../global/button.jsx";
 import PaymentCardIcon from "../global/payment-card-icon.jsx";
 import OrderCard from "../global/order-card.jsx";
 import ChangePaymentMethodModal from "./change-payment-method-modal";
+import { Link } from 'react-router-dom'
 
 class Billing extends React.Component {
   toggle = () => {
@@ -59,7 +60,7 @@ class Billing extends React.Component {
             return <OrderCard {...order} styles="w-full" />;
           })}
         </div>
-        <Button text="View All Orders" />
+        <Link to={`/orders`} className="font-bold text-primary border rounded-xl py-2 px-6 text-base font-bold text-primary button-border focus:outline-none">View All Orders</Link>
 
         <ChangePaymentMethodModal
           isOpen={this.props.open_payment_modal}

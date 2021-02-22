@@ -15,7 +15,7 @@ class Radio extends React.Component {
       >
         <div
           className={`
-            flex justify-center items-center w-8 h-8 md:w-6 md:h-6 mr-3 rounded-3xl 
+            flex justify-center items-center w-5 mr-3 rounded-3xl 
             ${!selected ? 'cursor-pointer' : ''}
             ${selected ? 'bg-primary' : 'border-solid border-gray-700 border'}
           `}

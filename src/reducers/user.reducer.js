@@ -1,4 +1,4 @@
-import { userConstants, otherConstants } from "../constants";
+import { userConstants, otherConstants } from '../constants';
 
 const initialState = {
   subscriptions: [],
@@ -83,12 +83,26 @@ export const user = (state = initialState, action) => {
         ...state,
         ...action.payload,
       };
-
     case userConstants.PAUSE_SUBSCRIPTION_SUCCESS:
       return {
         ...state,
         ...action.payload,
         loading: false,
+      };
+
+    case userConstants.UNPAUSE_SUBSCRIPTION_REQUESTED:
+      return {
+        ...state,
+        ...action.payload,
+        loading: true,
+        error: false,
+      };
+    case userConstants.UNPAUSE_SUBSCRIPTION_SUCCESS:
+      return {
+        ...state,
+        ...action.payload,
+        loading: false,
+        error: false,
       };
     case otherConstants.REQUEST_ERROR:
       return {
@@ -122,8 +136,8 @@ export const user = (state = initialState, action) => {
     case userConstants.UPDATE_PWD_ALERT_CLEAR:
       return {
         ...state,
-        pwd_update_success: " ",
-        pwd_alert: " ",
+        pwd_update_success: ' ',
+        pwd_alert: ' ',
       };
     case userConstants.OPEN_UPDATE_PAYMENT_MODAL_SUCCESS:
       return {
@@ -132,7 +146,6 @@ export const user = (state = initialState, action) => {
       };
 
     case userConstants.SET_BILLING_ADDRESS_SUCCESS:
-      console.log("billing address", action.payload);
       return {
         ...state,
         payment_billing_address: action.payload,
@@ -150,15 +163,15 @@ export const user = (state = initialState, action) => {
         open_payment_modal: !state.open_payment_modal,
         payment_method_updated: true,
         payment_billing_address: {
-          stripe_token: "",
-          same_as_shipping_address: "",
-          billing_first_name: "",
-          billing_last_name: "",
-          billing_street_address: "  ",
-          billing_apt_suite: "",
-          billing_city: "",
-          billing_postal_code: "",
-          billing_phone_number: "",
+          stripe_token: '',
+          same_as_shipping_address: '',
+          billing_first_name: '',
+          billing_last_name: '',
+          billing_street_address: '  ',
+          billing_apt_suite: '',
+          billing_city: '',
+          billing_postal_code: '',
+          billing_phone_number: '',
         },
       };
 

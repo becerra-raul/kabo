@@ -1,20 +1,21 @@
-import React from 'react';
-import { connect } from 'react-redux'
-import { reduxForm } from 'redux-form';
+import React from "react";
+import { connect } from "react-redux";
+import { reduxForm } from "redux-form";
 import DatePicker from "react-datepicker";
-import moment from 'moment';
+import moment from "moment";
 
-import { userActions } from '../../actions';
-import LoadingCircle from '../partials/loading';
-import DogSelector from './dog-selector';
-import MealPlanCard from './mealplan-card';
-import PortionDisplay from './portion-display';
+import { userActions } from "../../actions";
+import LoadingCircle from "../partials/loading";
+import DogSelector from "./dog-selector";
+import MealPlanCard from "./mealplan-card";
+import PortionDisplay from "./portion-display";
 
-import Modal from '../global/modal';
-import Radio from '../global/radio';
+import Modal from "../global/modal";
+import Radio from "../global/radio";
 
-import beefIcon from '../../assets/images/recipe/beef-100@2x.jpg';
-import { ReactComponent as FilledCircle } from '../../assets/images/filled-circle.svg'
+import beefIcon from "../../assets/images/recipe/beef-100@2x.jpg";
+import { ReactComponent as FilledCircle } from "../../assets/images/filled-circle.svg";
+import CancelMealModal from "./cancel-meal-modal";
 
 class MealPlanModal extends React.Component {
   constructor(props) {
@@ -24,55 +25,67 @@ class MealPlanModal extends React.Component {
       showPauseBox: false,
       showPauseBoxDate: false,
       showPauseBoxSuccess: false,
-      pauseType: '1_delivery',
+      pauseType: "1_delivery",
       pauseUntil: null,
-      pauseDisplay: '',
+      pauseDisplay: "",
       submitted: false,
+      showCancelBox: false,
     };
-    this.setDog = this.setDog.bind(this)
+    this.setDog = this.setDog.bind(this);
+    this.toggleCancelBox = this.toggleCancelBox.bind(this);
   }
 
   setDog(i) {
     this.setState({
       dogIndex: i,
-    })
+    });
   }
 
+  toggleCancelBox() {
+    this.setState({ showCancelBox: !this.state.showCancelBox });
+  }
 
   pauseMeal() {
     const dogId = this.props.dogs[this.state.dogIndex].id;
     const pauseUntil =
-      (
-        this.state.pauseType === '1_delivery' ||
-        this.state.pauseType === '2_deliveries' ||
-        this.state.pauseType === 'forever'
-      )
+      this.state.pauseType === "1_delivery" ||
+        this.state.pauseType === "2_deliveries" ||
+        this.state.pauseType === "forever"
         ? this.state.pauseType
         : this.state.pauseUntil;
 
     this.props.pauseSubscription({
       dogId: dogId,
       pauseUntil: pauseUntil,
-    })
+    });
     if (!this.props.error && !this.props.loading) {
       this.setState({
         showPauseBox: false,
-        showPauseBoxSuccess: true
-      })
+        showPauseBoxSuccess: true,
+      });
     }
   }
 
   render() {
-    const { dogIndex } = this.state
-    const { dogs, user, pauseSubscription, cancelSubscription, error, loading } = this.props
-    const dogsLength = dogs.length
-    const currentDog = dogs[dogIndex]
+    const { dogIndex } = this.state;
+    const {
+      dogs,
+      user,
+      pauseSubscription,
+      cancelSubscription,
+      error,
+      loading,
+    } = this.props;
+    const dogsLength = dogs.length;
+    const currentDog = dogs[dogIndex];
     const { portion } = currentDog;
 
     return (
       <>
         <div className="py-8 px-5 relative border-r border-l rounded-b-xl border-b border-gray-300">
-          {dogsLength > 1 && <DogSelector dogs={dogs} setDog={this.setDog} dogIndex={dogIndex} />}
+          {dogsLength > 1 && (
+            <DogSelector dogs={dogs} setDog={this.setDog} dogIndex={dogIndex} />
+          )}
           <MealPlanCard dogIndex={dogIndex} portion={portion} />
           <div className="text-primary w-full font-bold">
             <a href={`/edit-plan/${dogIndex}`}>
@@ -95,7 +108,7 @@ class MealPlanModal extends React.Component {
             </button>
             <button
               type="button"
-              onClick={() => cancelSubscription(user.chargebee_customer_id)}
+              onClick={this.toggleCancelBox}
               className="text-primary font-bold"
             >
               Cancel Meals
@@ -103,6 +116,12 @@ class MealPlanModal extends React.Component {
           </div>
         </div>
 
+        <CancelMealModal
+          isOpen={this.state.showCancelBox}
+          toggle={this.toggleCancelBox}
+          // cancelUserSubscription={cancelUserSubscription}
+          currentDog={currentDog}
+        />
         <Modal // initial pausebox modal
           title="Pause Kabo"
           isOpen={this.state.showPauseBox}
@@ -110,7 +129,13 @@ class MealPlanModal extends React.Component {
         >
           <div className="p-6">
             <div className="p-6">
-              {dogsLength > 1 && <DogSelector dogs={dogs} setDog={this.setDog} dogIndex={dogIndex} />}
+              {dogsLength > 1 && (
+                <DogSelector
+                  dogs={dogs}
+                  setDog={this.setDog}
+                  dogIndex={dogIndex}
+                />
+              )}
             </div>
 
             <div className="lg:flex justify-between lg:mb-12 mb-8">
@@ -130,22 +155,37 @@ class MealPlanModal extends React.Component {
                 <Radio
                   value="1_week"
                   text={`Pause ${currentDog.name} account for 1 delivery`}
-                  onChange={() => this.setState({ pauseType: '1_delivery', pauseDisplay: 'for 1 delivery' })}
-                  selected={this.state.pauseType === '1_delivery'}
+                  onChange={() =>
+                    this.setState({
+                      pauseType: "1_delivery",
+                      pauseDisplay: "for 1 delivery",
+                    })
+                  }
+                  selected={this.state.pauseType === "1_delivery"}
                   className="mb-7"
                 />
                 <Radio
                   value="2_week"
                   text={`Pause ${currentDog.name} account for 2 deliveries`}
-                  onChange={() => this.setState({ pauseType: '2_deliveries', pauseDisplay: 'for 2 deliveries' })}
-                  selected={this.state.pauseType === '2_deliveries'}
+                  onChange={() =>
+                    this.setState({
+                      pauseType: "2_deliveries",
+                      pauseDisplay: "for 2 deliveries",
+                    })
+                  }
+                  selected={this.state.pauseType === "2_deliveries"}
                   className="mb-7"
                 />
                 <Radio
                   value="forever"
                   text={`Pause ${currentDog.name} account indefinitley`}
-                  onChange={() => this.setState({ pauseType: 'forever', pauseDisplay: 'forever' })}
-                  selected={this.state.pauseType === 'forever'}
+                  onChange={() =>
+                    this.setState({
+                      pauseType: "forever",
+                      pauseDisplay: "forever",
+                    })
+                  }
+                  selected={this.state.pauseType === "forever"}
                   className="mb-7"
                 />
                 <Radio
@@ -155,39 +195,40 @@ class MealPlanModal extends React.Component {
                       <span>
                         Pause until &nbsp;
                         {this.state.pauseUntil === null
-                          ? 'a specific date'
-                          : moment(this.state.pauseUntil).format('MMM DD, YYYY')
-                        }
+                          ? "a specific date"
+                          : moment(this.state.pauseUntil).format(
+                            "MMM DD, YYYY"
+                          )}
                       </span>
                       &nbsp;
-                      {this.state.pauseUntil !== null &&
+                      {this.state.pauseUntil !== null && (
                         <span
                           className="text-primary text-sm"
                           onClick={() =>
                             this.setState({
                               showPauseBox: false,
-                              showPauseBoxDate: true
+                              showPauseBoxDate: true,
                             })
                           }
                         >
                           Edit Date
-                      </span>
-                      }
+                        </span>
+                      )}
                     </>
                   }
                   onChange={() => {
                     if (this.state.pauseUntil === null) {
                       this.setState({
                         showPauseBox: false,
-                        showPauseBoxDate: true
+                        showPauseBoxDate: true,
                       });
                     } else {
                       this.setState({
-                        pauseType: 'specific'
+                        pauseType: "specific",
                       });
                     }
                   }}
-                  selected={this.state.pauseType === 'specific'}
+                  selected={this.state.pauseType === "specific"}
                 />
               </div>
               <div className="mt-7 mb-6 sm:m-0">
@@ -209,10 +250,11 @@ class MealPlanModal extends React.Component {
                 Save Changes
               </button>
             </div>
-            {error &&
+            {error && (
               <div className="text-red-500 text-xs mt-1">
                 An error occured please try again later
-              </div>}
+              </div>
+            )}
           </div>
         </Modal>
 
@@ -222,7 +264,9 @@ class MealPlanModal extends React.Component {
           onRequestClose={() => this.setState({ showPauseBoxDate: false })}
         >
           <div className="p-6">
-            <h2 className="ml-0 sm:ml-8 text-xl font-bold">Choose the date you'd like to pause until</h2>
+            <h2 className="ml-0 sm:ml-8 text-xl font-bold">
+              Choose the date you'd like to pause until
+            </h2>
             <div className="flex justify-center mt-6 mb-4">
               <DatePicker
                 dateFormat="YYYY-MM-DD"
@@ -232,7 +276,11 @@ class MealPlanModal extends React.Component {
                     ? new Date(this.state.pauseUntil)
                     : null
                 }
-                onChange={date => this.setState({ pauseUntil: moment(date).format('YYYY-MM-DD') })}
+                onChange={(date) =>
+                  this.setState({
+                    pauseUntil: moment(date).format("YYYY-MM-DD"),
+                  })
+                }
                 inline
                 useWeekdaysShort={true}
               />
@@ -240,11 +288,13 @@ class MealPlanModal extends React.Component {
             <div className="flex justify-center">
               <button
                 className="rounded-xl py-3 px-8 text-base font-bold bg-primary text-white"
-                onClick={() => this.setState({
-                  pauseType: 'specific',
-                  showPauseBox: true,
-                  showPauseBoxDate: false
-                })}
+                onClick={() =>
+                  this.setState({
+                    pauseType: "specific",
+                    showPauseBox: true,
+                    showPauseBoxDate: false,
+                  })
+                }
               >
                 Pick Date
               </button>
@@ -260,19 +310,29 @@ class MealPlanModal extends React.Component {
           <div className="py-6 px-16">
             <div className="flex items-center flex-col mb-4">
               <FilledCircle className="rounded-full h-7.3 w-7.3 mb-6" />
-              <h2 className="text-xl font-bold mb-4">Your account has been successfully paused</h2>
-              <p className="text-sm mb-5 text-center">Your account is paused {this.state.pauseDisplay}</p>
+              <h2 className="text-xl font-bold mb-4">
+                Your account has been successfully paused
+              </h2>
+              <p className="text-sm mb-5 text-center">
+                Your account is paused {this.state.pauseDisplay}
+              </p>
               <div className="w-full p-6 bg-promptYellow rounded-1lg">
-                <h4 className="text-center text-base font-semibold mb-1">You can unpause anytime</h4>
-                <p className="text-center text-sm">Keep in mind you can pause your account at anytime</p>
+                <h4 className="text-center text-base font-semibold mb-1">
+                  You can unpause anytime
+                </h4>
+                <p className="text-center text-sm">
+                  Keep in mind you can pause your account at anytime
+                </p>
               </div>
             </div>
             <div className="flex justify-center">
               <button
                 className="rounded-xl py-3 px-8 text-base font-bold bg-primary text-white"
-                onClick={() => this.setState({
-                  showPauseBoxSuccess: false
-                })}
+                onClick={() =>
+                  this.setState({
+                    showPauseBoxSuccess: false,
+                  })
+                }
               >
                 Done
               </button>
@@ -280,27 +340,27 @@ class MealPlanModal extends React.Component {
           </div>
         </Modal>
       </>
-    )
+    );
   }
 }
-
 
 const mapDispatchToProps = (dispatch) => ({
   dispatch,
   pauseSubscription: (data) => dispatch(userActions.pauseSubscription(data)),
-  cancelSubscription: async (userId) => await dispatch(userActions.cancelSubscription(userId)),
-})
+  cancelSubscription: async (userId) =>
+    await dispatch(userActions.cancelSubscription(userId)),
+});
 
 const mapStateToProps = (state) => {
-  const { user } = state.authentication
-  const { subscriptions, dogs, error, loading } = state.user
+  const { user } = state.authentication;
+  const { subscriptions, dogs, error, loading } = state.user;
   return {
     user,
     dogs,
     subscriptions,
     error,
     loading,
-  }
-}
+  };
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(MealPlanModal)
+export default connect(mapStateToProps, mapDispatchToProps)(MealPlanModal);

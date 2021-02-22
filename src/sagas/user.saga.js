@@ -1,7 +1,7 @@
-import { takeLatest, call, put } from "redux-saga/effects";
+import { takeLatest, call, put } from 'redux-saga/effects';
 
-import { userService } from "../services";
-import { userConstants, otherConstants } from "../constants";
+import { userService } from '../services';
+import { userConstants, otherConstants } from '../constants';
 
 function* getAccountDataSaga() {
   try {
@@ -78,6 +78,15 @@ function* pauseSubscriptionSaga(action) {
   }
 }
 
+function* unpauseSubscriptionSaga(action) {
+  try {
+    const payload = yield call(userService.unpauseSubscription, action.payload);
+    yield put({ type: userConstants.UNPAUSE_SUBSCRIPTION_SUCCESS, payload });
+  } catch (e) {
+    yield put({ type: otherConstants.REQUEST_ERROR, payload: e });
+  }
+}
+
 function* updateDeliveryAddressSaga(action) {
   try {
     const payload = yield call(
@@ -90,18 +99,17 @@ function* updateDeliveryAddressSaga(action) {
   }
 }
 
-function* updateEmailPhoneSaga(action) { 
+function* updateEmailPhoneSaga(action) {
   try {
-    const payload = yield call(
-      userService.updatePhoneEmail,
-      action.payload
-    );
+    const payload = yield call(userService.updatePhoneEmail, action.payload);
     yield put({ type: userConstants.UPDATE_USER_PHONE_EMAIL_SUCCESS, payload });
   } catch (e) {
-    yield put({ type: userConstants.UPDATE_USER_PHONE_EMAIL_FAILURE, payload: e });
+    yield put({
+      type: userConstants.UPDATE_USER_PHONE_EMAIL_FAILURE,
+      payload: e,
+    });
   }
 }
-
 
 function* updateDeliveryFrequencySaga(action) {
   try {
@@ -189,13 +197,14 @@ export default function* user() {
     pauseSubscriptionSaga
   );
   yield takeLatest(
+    userConstants.UNPAUSE_SUBSCRIPTION_REQUESTED,
+    unpauseSubscriptionSaga
+  );
+  yield takeLatest(
     userConstants.DELIVERY_UPDATE_REQUESTED,
     updateDeliveryAddressSaga
   );
-  yield takeLatest(
-    userConstants.UPDATE_USER_PHONE_EMAIL,
-    updateEmailPhoneSaga
-  );
+  yield takeLatest(userConstants.UPDATE_USER_PHONE_EMAIL, updateEmailPhoneSaga);
   yield takeLatest(userConstants.ORDER_DATA_REQUESTED, getOrderDataSaga);
   yield takeLatest(userConstants.UPDATE_PWD_REQUESTED, updatePassword);
 

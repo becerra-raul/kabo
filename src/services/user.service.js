@@ -56,6 +56,19 @@ const pauseSubscription = (data) => {
     .then((res) => res);
 };
 
+const unpauseSubscription = (data) => {
+  const requestOptions = request.options(
+    'POST',
+    JSON.stringify({ dog_id: data.dog_id }),
+    true,
+    true
+  );
+
+  return fetch(endpointConstants.UNPAUSE_SUBSCRIPTION, requestOptions)
+    .then(request.handleResponse)
+    .then((res) => res);
+};
+
 const cancelSubscription = (userId) => {
   const requestOptions = request.options(
     "POST",
@@ -206,6 +219,7 @@ export const userService = {
   getSubscriptionData,
   getOrderData,
   pauseSubscription,
+  unpauseSubscription,
   cancelSubscription,
   getSubscriptionData,
   getBreedData,

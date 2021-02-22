@@ -11,6 +11,7 @@ import DeliveryModal from "../../components/account/delivery-modal.jsx";
 import MealPlanModal from "../../components/account/meal-modal.jsx";
 import FrequencyModal from "../../components/account/delivery-frequency.jsx";
 import LoadingCircle from "../../components/partials/loading.jsx";
+import DogImage from '../../assets/images/Badge-Labrador-Retriever.svg';
 
 import { userActions } from "../../actions";
 
@@ -78,7 +79,7 @@ class AccountPage extends React.Component {
       return (
         <img
           key={i}
-          src="https://bit.ly/3bXTqXh"
+          src={DogImage}
           alt=""
           className="md:mr-9 h-16 w-16 rounded-full"
         />
@@ -93,7 +94,7 @@ class AccountPage extends React.Component {
               {profileImages}
             </div>
             <div className="h-full text-xl text-center md:text-left font-bold md:m-6 font-messina">
-              {readableNames}'s Dashboard
+              {readableNames}'s
             </div>
           </div>
         </div>

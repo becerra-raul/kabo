@@ -3,43 +3,24 @@ import OrderItemModal from "../order/order-item-modal";
 
 const FoodCard = ({
   type,
-  dog,
   food,
   icons,
   kibble,
-  handleSelectedCookedRecipes,
+  selectCookedFood,
   selectedCookedRecipes,
-  kibbleRecipe,
-  recipe,
-  keys,
+  selectKibbleRecipe,
+  selected,
+  selectedLength,
 }) => {
-  const [kibble_, isKibble] = useState(false);
-  const [cooked, isCooked] = useState(false);
-  const [selected, isSelected] = useState(false);
+  if (!selectedCookedRecipes && !kibble) return null
+
+
   const [details, openDetails] = useState(false)
+  const kibbleOnlyNull = kibble.some(function (el) {
+    return el !== null;
+  });
   //const [recipe_, setRecipe] = useState("");
 
-  useEffect(() => {
-    if (type === "cooked") {
-      keys.includes(`${recipe}_recipe`)
-        ? isSelected(dog[`${recipe}_recipe`])
-        : isSelected(false);
-    }
-  }, []);
-
-  const selectKibbleRecipe = (food) => {
-    isKibble(!kibble_);
-    isSelected(!selected);
-    kibbleRecipe(food);
-  };
-
-  const selectCookedFood = (food) => {
-    isCooked(!cooked);
-    isSelected(!selected);
-    handleSelectedCookedRecipes(food);
-  };
-
-  if (!selectedCookedRecipes && !kibble) return null
 
   const selectedText = "bg-green-700 border border-green-700 hover:border-transparent focus:outline-none text-white text-sm md:text-base font-bold p-1 md:py-2 md:px-5 w-4/5 rounded-xl mt-2 md:mt-0"
   const unSelectedText = "bg-transparent border border-green-700 hover:border-transparent focus:outline-none hover:bg-green-700 text-primary hover:text-white font-bold text-sm md:text-base w-4/5 p-1 md:py-2 md:px-5 rounded-xl border-green  mt-2 md:mt-0"
@@ -67,35 +48,17 @@ const FoodCard = ({
         <div onClick={() => { openDetails(true) }} className="text-primary font-bold text-sm md:text-base mt-2 md:mt-0 font-messina cursor-pointer">See Details</div>
         {type === "kibble" ? (
           <button
-            className={
-              kibble_ || selected
-                ? selectedText
-                : unSelectedText
-            }
+            className={selected ? selectedText : unSelectedText}
             onClick={() => selectKibbleRecipe(food)}
-            value={kibble_}
-            disabled={
-              (!kibble_ && !selected && selectedCookedRecipes && selectedCookedRecipes.length === 2) ||
-              (!kibble_ && !selected && kibble && kibble.length === 1)
-            }
+            disabled={selectedLength >= 2 && !selected && !kibbleOnlyNull}
           >
             {selected ? 'Recipe Added' : 'Add Recipe'}
           </button>
         ) : (
             <button
-              className={
-                cooked || selected
-                  ? selectedText
-                  : unSelectedText
-              }
+              className={selected ? selectedText : unSelectedText}
               onClick={() => selectCookedFood(food)}
-              value={cooked}
-              disabled={
-                (!cooked && selectedCookedRecipes.length === 2 && !selected) ||
-                (!cooked && !selected &&
-                  kibble && kibble.length > 0 &&
-                  selectedCookedRecipes.length === 1)
-              }
+              disabled={selectedLength >= 2 && !selected}
             >
               {selected ? 'Recipe Added' : 'Add Recipe'}
             </button>
