@@ -14,8 +14,7 @@ const FoodCard = ({
 }) => {
   if (!selectedCookedRecipes && !kibble) return null
 
-
-  const [details, openDetails] = useState(false)
+  const [details, openDetails] = useState(false);
   const kibbleOnlyNull = kibble.some(function (el) {
     return el !== null;
   });
@@ -29,10 +28,16 @@ const FoodCard = ({
       <div
         className={
           type === "kibble"
-            ? `bg-kibble-${food.recipe} w-auto md:w-1/2 h-full flex items-center justify-center h-1/2 md:h-auto`
-            : `bg-${food.recipe} w-auto md:w-1/2 h-full flex items-center justify-center h-1/2 md:h-auto`
+            ? `bg-kibble-${food.recipe} w-auto md:w-1/2 h-full flex items-center justify-center h-1/2 md:h-auto relative`
+            : `bg-${food.recipe} w-auto md:w-1/2 h-full flex items-center justify-center h-1/2 md:h-auto relative`
         }
       >
+        {food.new && (
+          <div className="recipeBadge">
+            <span className="font-messina">NEW</span>
+          </div>
+        )}
+
         <img src={food.image_url} className="h-4/5 max-h-28 md:mx-h-none" />
       </div>
       <div
