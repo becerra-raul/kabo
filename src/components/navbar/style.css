@@ -62,7 +62,7 @@
   /* General sidebar styles */
   .bm-menu {
     background: #373a47;
-    padding: 1.7em 1.5em 0;
+    padding: 2.5em 1.5em 0;
     font-size: 1.15em;
   }
   
@@ -73,7 +73,6 @@
   
   /* Wrapper for item list */
   .bm-item-list {
-    padding-top: 3rem;
     color: #b8b7ad;
   }
   
@@ -97,7 +96,7 @@
 
   .bm-menu-wrap {
     width: 100% !important;
-    top: 0px;
+    top: 30px;
   }
 
   .bm-menu-wrap .bm-menu {

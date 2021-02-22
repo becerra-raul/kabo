@@ -10,14 +10,13 @@ class RecipeSelection extends Component {
     const {
       user,
       index,
-      selectedKibble,
+      kibble,
       isKibble,
       toggleKibble,
       selectedDog,
       handleSelectedKibbleRecipe,
       handleSelectedCookedRecipes,
       selectedCookedRecipes,
-      selectedLength,
     } = this.props;
     return (
       <div className="w-full flex flex-col py-9 items-center bg-recipeGray">
@@ -37,11 +36,12 @@ class RecipeSelection extends Component {
                     <div className="grid grid-cols-2 md:grid-cols-1 gap-3">
                       <MealPlanSelect
                         type="cooked"
+                        dog={user.dogs[index]}
                         index={index}
                         recipes={user.cooked_recipes}
                         handleSelectedCookedRecipes={handleSelectedCookedRecipes}
                         selectedCookedRecipes={selectedCookedRecipes}
-                        selectedKibble={selectedKibble}
+                        selectedKibble={kibble}
                         selectedDog={selectedDog}
                       />
                     </div>
@@ -57,14 +57,14 @@ class RecipeSelection extends Component {
                     <div className="grid grid-cols-2 md:grid-cols-1 gap-3">
                       <MealPlanSelect
                         type="kibble"
+                        dog={user.dogs[index]}
                         recipes={user.kibble_recipes}
                         selectedKibbleRecipe={handleSelectedKibbleRecipe}
-                        selectedKibble={selectedKibble}
+                        selectedKibble={kibble}
                         selectedCookedRecipes={selectedCookedRecipes}
                         toggleKibble={toggleKibble}
                         isKibble={isKibble}
                         selectedDog={selectedDog}
-                        selectedLength={selectedLength}
                       />
                     </div>
                   </>

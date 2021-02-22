@@ -25,7 +25,7 @@ class EditPlan extends Component {
     previous: true,
     selectedBox: false,
     cookedRecipes: [],
-    kibbleRecipes: [],
+    kibble: [],
     isKibble: false,
     selectedPortion: false,
     estimate: false,
@@ -47,7 +47,7 @@ class EditPlan extends Component {
       prevProps.user.dogs.length > 0 &&
       Object.keys(prevState.dog).length === 0
     ) {
-      let currentdog = prevProps.user.dogs[index];
+      let currentdog = prevProps.user.dogs[index]
       let loadRecipes = []
       if (currentdog.chicken_recipe) {
         loadRecipes.push('chicken')
@@ -62,11 +62,10 @@ class EditPlan extends Component {
       if (currentdog.turkey_recipe) {
         loadRecipes.push('turkey')
       }
-      ///again not sure can be more then one kibble recipe
       this.setState({
         dog: prevProps.user.dogs[index],
         cookedRecipes: loadRecipes,
-        kibbleRecipes: [currentdog.kibble_recipe] || []
+        kibble: currentdog.kibble
       });
     }
   }
@@ -101,28 +100,28 @@ class EditPlan extends Component {
   };
 
   handleSelectedKibbleRecipe = (food) => {
-    const { kibbleRecipes } = this.state;
-    if (kibbleRecipes.length > 0 && kibbleRecipes.includes(food.recipe)) {
-      let recipes = [...kibbleRecipes];
+    const { kibble } = this.state;
+    if (kibble.length > 0 && kibble.includes(food.recipe)) {
+      let recipes = [...kibble];
       const index = recipes.indexOf(food.recipe);
       recipes.splice(index, 1);
-      this.setState({ kibbleRecipes: recipes });
+      this.setState({ kibble: recipes });
       return;
     }
-    this.setState({ kibbleRecipes: [...kibbleRecipes, food.recipe] });
+    this.setState({ kibble: [...kibble, food.recipe] });
   };
 
   handleNext = () => {
     if (this.state.step === 1) {
-      const { cookedRecipes, kibbleRecipes, dietPortion, dog } = this.state;
+      const { cookedRecipes, kibble, dietPortion, dog } = this.state;
       const data = {
         dog_id: dog.id,
         cooked_portion: dietPortion.cooked_portion || null,
         kibble_portion: dietPortion.kibble_portion || null,
         portion_adjusment: dietPortion.portion_adjusment || null
       };
-      if (kibbleRecipes && kibbleRecipes.length > 0) {
-        data.kibble_recipe = kibbleRecipes[0];
+      if (kibble && kibble.length > 0) {
+        data.kibble_recipe = kibble[0];
       }
       for (let item of cookedRecipes) {
         data[`${item}_recipe`] = true;
@@ -141,16 +140,15 @@ class EditPlan extends Component {
   };
 
   handleMealUpdate = () => {
-    const { cookedRecipes, kibbleRecipes, dietPortion, dog } = this.state;
+    const { cookedRecipes, kibble, dietPortion, dog } = this.state;
     const data = {
       dog_id: dog.id,
       cooked_portion: dietPortion.cooked_portion || null,
       kibble_portion: dietPortion.kibble_portion || null,
       portion_adjusment: dietPortion.portion_adjusment || null
     };
-    ///not sure what to do if selected kibbleRecipes more than one
-    if (kibbleRecipes && kibbleRecipes.length > 0) {
-      data.kibble_recipe = kibbleRecipes[0];
+    if (kibble && kibble.length > 0) {
+      data.kibble_recipe = kibble[0];
     }
     for (let item of cookedRecipes) {
       data[`${item}_recipe`] = true;
@@ -160,12 +158,10 @@ class EditPlan extends Component {
 
   render() {
     const { user, meal, getDailyDietPortion } = this.props;
-    const { cookedRecipes, kibbleRecipes, dog, dietPortion, index, step } = this.state;
+    const { cookedRecipes, kibble, dog, dietPortion, index, step } = this.state;
 
     if (user.subLoading) return <LoadingCircle />
-    ///checking selected plans length.
-    const selectedLength = (kibbleRecipes ? kibbleRecipes.length : 0)
-        + (cookedRecipes ? cookedRecipes.length : 0);
+
     return (
       <React.Fragment>
         {step == 0 && (
@@ -173,11 +169,11 @@ class EditPlan extends Component {
             user={user}
             index={this.props.match.params.id}
             selectedDog={this.selectedDog}
+            cookedRecipes={this.state.cookedRecipes}
             handleSelectedCookedRecipes={this.handleSelectedCookedRecipes}
-            selectedCookedRecipes={cookedRecipes}
+            selectedCookedRecipes={this.state.cookedRecipes}
             handleSelectedKibbleRecipe={this.handleSelectedKibbleRecipe}
-            selectedKibble={kibbleRecipes}
-            selectedLength={selectedLength}
+            kibble={this.state.kibble}
             toggleKibble={this.toggleKibble}
             isKibble={this.state.isKibble}
           />
@@ -192,7 +188,7 @@ class EditPlan extends Component {
             togglePortion={this.togglePortion}
             selectedDietPortion={this.selectedDietPortion}
             getDailyDietPortion={getDailyDietPortion}
-            kibbleRecipe={kibbleRecipes}
+            kibbleRecipe={kibble}
           />
         )}
         {step > 1 && (
@@ -203,7 +199,7 @@ class EditPlan extends Component {
             cookedRecipes={cookedRecipes}
             index={this.props.match.params.id}
             subs={user.subscriptions}
-            kibble={this.state.kibbleRecipes}
+            kibble={this.state.kibble}
             onClose={this.handlePrevious}
             dietPortion={this.state.dietPortion}
             estimate={user.estimate}
@@ -225,9 +221,9 @@ class EditPlan extends Component {
             {step == 0 && (
               <button
                 onClick={this.handleNext}
-                disabled={selectedLength !== 2}
+                disabled={cookedRecipes.length === 0 && kibble.length === 0}
                 className={
-                  selectedLength !== 2
+                  cookedRecipes.length === 0 && kibble.length === 0
                     ? "bg-gray-300 focus:outline-none text-white font-bold py-2 px-4 rounded"
                     : "bg-green-600 focus:outline-none text-white font-bold py-2 px-4 rounded"
                 }
@@ -240,7 +236,7 @@ class EditPlan extends Component {
                 onClick={this.handleNext}
                 disabled={Object.keys(dietPortion).length <= 0}
                 className={
-                  cookedRecipes.length === 0 && kibbleRecipes.length === 0
+                  cookedRecipes.length === 0 && kibble.length === 0
                     ? "bg-gray-300 focus:outline-none text-white font-bold py-2 px-4 rounded"
                     : "bg-green-600 focus:outline-none text-white font-bold py-2 px-4 rounded"
                 }
