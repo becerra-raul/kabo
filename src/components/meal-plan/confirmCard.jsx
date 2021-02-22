@@ -24,7 +24,8 @@ const MealIcon = ({ source, notFirst }) => (
 const ConfirmMeal = ({ dog, subs, onConfirm, cookedRecipes, kibble, portion, open, onClose, estimate, user }) => {
   if (!dog.chargebee_subscription_id) return null
   let cbID = dog.chargebee_subscription_id
-  let subData = subs.[cbID]
+  ////resolved this error subs.[cbID]
+  let subData = subs[cbID]
   let totalReadable = (subData.invoice_estimate_total / 100).toFixed(2)
   const { cooked_recipes, kibble_recipes } = user
   let recipeArray = []
@@ -59,8 +60,10 @@ const ConfirmMeal = ({ dog, subs, onConfirm, cookedRecipes, kibble, portion, ope
       <MealIcon key="turkey_recipe" notFirst={iconArray.length > 0} source={cooked_recipes[2].image_url} />
     )
   }
-  if (kibble) {
-    recipeArray.push(`${kibble} kibble`)
+  if (kibble.length) {
+    kibble.forEach(kib => {
+      recipeArray.push(`${kib} kibble`)
+    });
     iconArray.push(
       <MealIcon key="turkey_recipe" notFirst={iconArray.length > 0} source={kibble_recipes[0].image_url} />
     )
@@ -85,7 +88,7 @@ const ConfirmMeal = ({ dog, subs, onConfirm, cookedRecipes, kibble, portion, ope
             Please confirm meal plan updates
             <div className="flex">
               {iconArray}
-              {recipeArray}
+              {recipeArray.join(`, `)}
             </div>
           </div>
 
