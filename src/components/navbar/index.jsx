@@ -60,16 +60,17 @@ class Navbar extends React.Component {
     const inActive = "text-charcoal hover:bg-green-500 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
 
     const loggedIn = user && user.token
+
     return (
         <nav className="fixed md:relative md:h-28 sm:h-22 bg-white md:bg-none z-50 w-full" id="outer-container">
           <div className="py-8 flex items-center sm:justify-between sm:items-stretch">
             <div className="sm:hidden">
               <Menu pageWrapId={ "page-wrap" } outerContainerId={ "outer-container" } right>
-                <a id="home" className="menu-item" href="#">Kabo Homepage</a>
-                <a id="account" className="menu-item" href="#">Your Account</a>
-                <a id="blog" className="menu-item" href="#">Blog</a>
-                <a id="help" className="menu-item" href="#">Help</a>
-                <a onClick={ this.clickLogout } className="menu-item" href="">Logout</a>
+                <a id="home" className="menu-item" href="/redirect?location=kabo.co" >Kabo Homepage</a>
+                {loggedIn && <a id="account" className="menu-item" href="/profile">Your Account</a>}
+                <a id="blog" className="menu-item" href="/redirect?location=kabo.co/blog" >Blog</a>
+                <a id="help" className="menu-item" href="/redirect?location=https://kabo.zendesk.com/">Help</a>
+                {loggedIn && <a onClick={() => this.clickLogout()} className="menu-item" href="">Logout</a>}
               </Menu>
             </div>
             <div className="flex-shrink-0 flex items-center left-0" id="page-wrap">

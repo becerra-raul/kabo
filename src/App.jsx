@@ -11,6 +11,7 @@ import { Alert } from './components/alert'
 import ProfilePage from './pages/profile'
 import EditPlan from './pages/meal-plan'
 import OrderDetail from "./pages/order/detail"
+import {RedirectRoute} from "./route/RedirectRoute";
 
 function App() {
 
@@ -22,7 +23,7 @@ function App() {
       <Alert />
       <BrowserRouter>
         <Switch>
-
+          <Route path='/redirect' exact component={RedirectRoute} />
           <Route path='/login' component={LoginPage} />
           <PrivateRoute path='/orders' exact component={AllOrdersPage} />
           <PrivateRoute path='/orders/:id' exact component={OrderDetail} />

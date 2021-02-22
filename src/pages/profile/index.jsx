@@ -34,7 +34,7 @@ class ProfilePage extends React.Component {
 
   render() {
     if (!this.props.dogs.length || !this.props.user.shipping_address)
-      return <LoadingCircle />;
+      return null;
     const { user, subscriptions, dogs, updatePaymentMethod } = this.props;
 
     const detailsCard =
