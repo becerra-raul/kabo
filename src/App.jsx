@@ -18,6 +18,7 @@ function App() {
     <div className="h-screen container mx-auto sm-container">
 
       <Navbar />
+      <div className="md:hidden h-24"> </div>
       <Alert />
       <BrowserRouter>
         <Switch>
