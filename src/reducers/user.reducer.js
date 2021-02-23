@@ -1,7 +1,7 @@
 import { userConstants, otherConstants } from '../constants';
 
 const initialState = {
-  subscriptions: [],
+  subscriptions: {},
   dogs: [],
   recipes: [],
   orders: [],
@@ -85,9 +85,15 @@ export const user = (state = initialState, action) => {
         loading: true,
       };
     case userConstants.PAUSE_SUBSCRIPTION_SUCCESS:
+      let nextState = {...state};
+      if (action.payload.subscription.id) {
+        nextState.subscriptions[action.payload.subscription.id] = {
+          ...nextState.subscriptions[action.payload.subscription.id],
+          ...action.payload.subscription
+        };
+      }
       return {
-        ...state,
-        ...action.payload,
+        ...nextState,
         loading: false,
         error: false
       };

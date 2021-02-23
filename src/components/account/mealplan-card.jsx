@@ -1,5 +1,6 @@
 import React from "react";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
+import {userSelectors} from "../../selectors/user.selectors";
 
 const MealIcon = ({ source, notFirst }) => (
   <img
@@ -9,14 +10,9 @@ const MealIcon = ({ source, notFirst }) => (
   />
 );
 
-const MealPlanCard = (props) => {
-  let currentDog = {};
-  const { dogs, dogIndex, subscriptions, noPrice, user } = props;
-  const { cooked_recipes, kibble_recipes } = user;
-
+const MealPlanCard = ({ noPrice, cooked_recipes, kibble_recipes, subscription, currentDog }) => {
   if (!cooked_recipes || !kibble_recipes) return null;
 
-  currentDog = dogs[dogIndex];
   let recipeArray = [];
   let iconArray = [];
 
@@ -81,9 +77,10 @@ const MealPlanCard = (props) => {
     portion = `${currentDog.cooked_portion}% fresh food & ${currentDog.kibble_portion} kibble`;
   }
 
-  var subscriptionArray = Object.values(subscriptions);
-
-  let price = subscriptionArray[dogIndex].invoice_estimate_total;
+  let price = subscription
+  && subscription.invoice_estimate_total
+  && Number.isInteger(+subscription.invoice_estimate_total)
+      ? subscription.invoice_estimate_total : 0;
 
   price /= 100;
 
@@ -102,13 +99,13 @@ const MealPlanCard = (props) => {
   );
 };
 
-function mapStateToProps(state) {
-  const { user } = state;
-  const { subscriptions, dogs } = state.user;
+function mapStateToProps(state, props) {
+  const { cooked_recipes, kibble_recipes } = state.user;
   return {
-    user,
-    dogs,
-    subscriptions,
+    cooked_recipes,
+    kibble_recipes,
+    subscription: userSelectors.selectSubscriptionByDogIndex(state, props.dogIndex),
+    currentDog: userSelectors.selectDogByIndex(state, props.dogIndex)
   };
 }
 

@@ -1,23 +1,22 @@
 import React from "react";
-import Modal from "../global/modal";
 import LoadingCircle from "../partials/loading";
 import Stepper from "../partials/stepper";
 import MealplanCard from "./mealplan-card";
+import {connect} from "react-redux";
+import {userSelectors} from "../../selectors/user.selectors";
+import {userActions} from "../../actions";
 
 // dogs, dogIndex, subscriptions, noPrice, user
 const SkipDeliveryModal = ({
-  isOpen,
-  toggle,
-  dogs,
   dogIndex,
-  user,
   User,
-  portion,
+  currentDog,
+  //dogSubscription,
   skipping_dog_delivery,
   skipDogDelivery,
 }) => {
   const getNextDeliveryDates = () => {
-    console.log(portion)
+    console.log(currentDog)
     return (
       User.delivery_starting_date_options &&
       User.delivery_starting_date_options.map((item) => {
@@ -30,11 +29,7 @@ const SkipDeliveryModal = ({
   };
 
   return (
-    <Modal
-      isOpen={isOpen}
-      onRequestClose={toggle}
-    // title={`Skip ${portion.name} Meal Plan`}
-    >
+    <>
       {skipping_dog_delivery && <LoadingCircle />}
 
       <div className="py-3 px-24 overflow-x-hidden">
@@ -49,11 +44,11 @@ const SkipDeliveryModal = ({
           </p>
         </div>
         <div className="bg-white border p-5 rounded-md shadow-md">
-          <MealplanCard dogs={dogs} dogIndex={dogIndex} user={user} />
+          <MealplanCard dogIndex={dogIndex}/>
           <div>
             <button
               className="bg-green-600 text-white py-2 px-10 rounded-md focus:outline-none font-medium"
-              onClick={() => skipDogDelivery(portion.id)}
+              onClick={() => skipDogDelivery(currentDog.id)}
             >
               Skip Delivery
             </button>
@@ -72,8 +67,25 @@ const SkipDeliveryModal = ({
           </div>
         </div>
       </div>
-    </Modal>
+    </>
   );
 };
 
-export default SkipDeliveryModal;
+function mapStateToProps(state, props) {
+  const { user: User, user } = state;
+  const {
+    skipping_dog_delivery,
+  } = state.user;
+  return {
+    User,
+    dogSubscription: userSelectors.selectSubscriptionByDogIndex(state, props.dogIndex),
+    currentDog: userSelectors.selectDogByIndex(state, props.dogIndex),
+    skipping_dog_delivery,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => ({
+  skipDogDelivery: (payload) => dispatch(userActions.skipDogDelivery(payload)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SkipDeliveryModal);
