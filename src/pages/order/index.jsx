@@ -9,10 +9,6 @@ class AllOrdersPage extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getOrderData();
-  }
-
-  componentDidMount() {
     console.log("order component mounted:");
     this.props.getOrderData();
   }
