@@ -101,7 +101,7 @@ class Billing extends React.Component {
              isOpen={this.state.showCancelBox}
              onRequestClose={this.toggleCancelBox}
           >
-              <CancelMealModal closeModal={() => this.setState({showCancelBox: false})}/>
+              <CancelMealModal closeHandler={() => this.setState({showCancelBox: false})}/>
         </Modal>
 
         <Modal
