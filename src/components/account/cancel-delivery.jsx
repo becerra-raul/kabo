@@ -2,7 +2,7 @@ import React from "react";
 import Radio from "../global/radio";
 import beefIcon from "../../assets/images/recipe/beef-100@2x.jpg";
 
-const CancelDelivery = ({ cancelType, setCancelType }) => {
+const CancelDelivery = ({ cancelType, setCancelType, dogIndex }) => {
   return (
     <React.Fragment>
       <div className="lg:flex justify-between lg:mb-4 mb-4">
@@ -17,7 +17,10 @@ const CancelDelivery = ({ cancelType, setCancelType }) => {
           <h5 className="text-base font-semibold ">$43.12</h5>
         </div>
         <div className="">
-          <a className="text-sm font-semibold text-primary lg:mr-2 cursor-pointer">
+          <a
+              className="text-sm font-semibold text-primary lg:mr-2 cursor-pointer"
+              href={`/edit-plan/${dogIndex}`}
+          >
             Select a different meal plan
           </a>
         </div>

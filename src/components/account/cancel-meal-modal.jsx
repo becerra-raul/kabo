@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import Modal from "../global/modal";
 import Radio from "../global/radio";
 import beefIcon from "../../assets/images/recipe/beef-100@2x.jpg";
@@ -8,10 +8,9 @@ import CancelReason from "./cancel-reasons";
 import SorryMessage from "./sorry-message";
 
 const CancelMealModal = ({
-  isOpen,
-  toggle,
   currentDog,
   cancelUserSubscription,
+  dogIndex
 }) => {
   const [cancelType, setCancelType] = useState("1-delivery");
   const [step, setStep] = useState(1);
@@ -21,11 +20,15 @@ const CancelMealModal = ({
     setStep(step);
   };
 
+  useEffect(() => {
+    setStep(1);
+  }, [])
+
   return (
-    <Modal title="Cancel Kabo" isOpen={isOpen} onRequestClose={toggle}>
-      <div className="p-6">
+    <div className="p-6">
         {step === 1 && (
           <CancelDelivery
+            dogIndex={dogIndex}
             cancelType={cancelType}
             setCancelType={setCancelType}
           />
@@ -45,7 +48,6 @@ const CancelMealModal = ({
           </div>
         )}
       </div>
-    </Modal>
   );
 };
 

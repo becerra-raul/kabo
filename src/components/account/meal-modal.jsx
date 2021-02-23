@@ -1,11 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
-import { reduxForm } from "redux-form";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 
 import { userActions } from "../../actions";
-import LoadingCircle from "../partials/loading";
 import DogSelector from "./dog-selector";
 import MealPlanCard from "./mealplan-card";
 import PortionDisplay from "./portion-display";
@@ -129,12 +127,16 @@ class MealPlanModal extends React.Component {
           </div>
         </div>
 
-        <CancelMealModal
-          isOpen={this.state.showCancelBox}
-          toggle={this.toggleCancelBox}
-          // cancelUserSubscription={cancelUserSubscription}
-          currentDog={currentDog}
-        />
+        <Modal title="Cancel Kabo"
+               isOpen={this.state.showCancelBox}
+               onRequestClose={this.toggleCancelBox}
+        >
+          <CancelMealModal
+              currentDog={currentDog}
+              dogIndex={dogIndex}
+          />
+        </Modal>
+
         <Modal // initial pausebox modal
           title="Pause Kabo"
           isOpen={this.state.showPauseBox}
