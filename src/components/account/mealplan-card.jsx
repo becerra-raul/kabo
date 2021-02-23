@@ -87,7 +87,7 @@ const MealPlanCard = ({ noPrice, cooked_recipes, kibble_recipes, subscription, c
   const readableRecipe = recipeArray.join(" and ");
   return (
     <div className="w-full flex justify-between font-semibold text-base mb-14 md:flex-col xl:flex-row">
-      <div className="flex">
+      <div className="flex items-center">
         {iconArray}
         <div className="ml-9 md:ml-4 xl:ml-9">
           <div>{readableRecipe}</div>
