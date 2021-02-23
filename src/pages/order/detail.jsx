@@ -67,8 +67,8 @@ class OrderDetail extends React.Component {
                     key={index + ""}
                     className='rounded-md border border-gray-200'
                   >
-                    <div className='rounded-md rounded-b-none flex justify-center bg-chicken'>
-                      <img src={item.image_url} className='w-3/5 m-5'></img>
+                    <div className='flex rounded-md rounded-b-none justify-center bg-chicken'>
+                      <img src={item.image_url} className='self-center w-3/5 m-5' sizes="147px"></img>
                     </div>
                     <div className='p-5 text-center'>
                       <div className='text-2xl'>{item.name}</div>
