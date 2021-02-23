@@ -10,12 +10,11 @@ const MealIcon = ({ source, notFirst }) => (
   />
 );
 
-const MealPlanCard = ({ noPrice, cooked_recipes, kibble_recipes, subscription, currentDog }) => {
+const MealPlanCard = ({ noPrice, cooked_recipes, kibble_recipes, subscription, currentDog, nextDelivery }) => {
   if (!cooked_recipes || !kibble_recipes) return null;
 
   let recipeArray = [];
   let iconArray = [];
-
   if (currentDog.chicken_recipe) {
     recipeArray.push(cooked_recipes[0].name);
     iconArray.push(
@@ -86,15 +85,23 @@ const MealPlanCard = ({ noPrice, cooked_recipes, kibble_recipes, subscription, c
 
   const readableRecipe = recipeArray.join(" and ");
   return (
-    <div className="w-full flex justify-between font-semibold text-base mb-14 md:flex-col xl:flex-row">
-      <div className="flex items-center">
-        {iconArray}
-        <div className="ml-9 md:ml-4 xl:ml-9">
-          <div>{readableRecipe}</div>
-          <div>{portion}</div>
+    <div>
+      <div>
+        {nextDelivery && <p className="pb-8 font-messina text-gray-600 text-15 leading-20">Expected Arrival: {nextDelivery}</p>}
+
+        <div className="w-full font-semibold text-base mb-6 md:flex-col xl:flex-row">
+          <div className="flex items-center">
+            {iconArray}
+            <div className="ml-4 md:ml-4 xl:pr-9">
+              <p className="font-normal text-17 leading-24">{readableRecipe}</p>
+            </div>
+          </div>
+          <div className="flex justify-between mt-6">
+            {" "}
+            <p className="font-normal text-gray-800 pr-4">{portion}</p> {!noPrice && <span className="font-medium">${price}</span>}
+          </div>
         </div>
       </div>
-      {!noPrice && <div>${price}</div>}
     </div>
   );
 };

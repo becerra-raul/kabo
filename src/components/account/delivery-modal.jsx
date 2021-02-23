@@ -102,7 +102,7 @@ const DeliveryModal = ({
           {dogsLength > 1 && (
             <DogSelector dogs={dogs} setDog={setDog} dogIndex={dogIndex} />
           )}
-          <MealPlanCard dogIndex={dogIndex} />
+          <MealPlanCard dogIndex={dogIndex} nextDelivery={nextDelivery} />
           <nav aria-label="Progress">
             <Stepper
               labels={[

@@ -1,6 +1,6 @@
 import React from "react";
 
-const SorryMessage = () => {
+const SorryMessage = ({closeHandler}) => {
   return (
     <React.Fragment>
       <p className="text-lg text-center font-medium text-gray-700">
@@ -19,7 +19,7 @@ const SorryMessage = () => {
       </div>
 
       <div className="text-center mt-5">
-        <button className="rounded-xl py-3 px-8 text-base font-bold bg-primary focus:outline-none text-white mt-2">
+        <button onClick={()=>closeHandler()} className="rounded-xl py-3 px-8 text-base font-bold bg-primary focus:outline-none text-white mt-2">
           Done
         </button>
       </div>

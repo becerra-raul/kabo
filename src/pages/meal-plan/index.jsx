@@ -151,7 +151,12 @@ class EditPlan extends Component {
       const data = {
         dog_id: dog.id,
         cooked_portion: dietPortion.cooked_portion,
-        kibble_portion: dietPortion.kibble_portion,
+        kibble_portion: dietPortion.kibble_portion || null,
+        chicken_recipe: false,
+        turkey_recipe: false,
+        lamb_recipe: false,
+        beef_recipe: false,
+        kibble_recipe: null,
         portion_adjusment: dietPortion.portion_adjusment || null
       };
       let kibbleNotNull = kibbleRecipes.some(function (el) {
@@ -159,14 +164,10 @@ class EditPlan extends Component {
       })
       if (kibbleNotNull) {
         data.kibble_recipe = kibbleRecipes[0];
-      } else {
-        data.kibble_recipe = null
-        // this.setState({ kibbleRecipes: [] })
       }
       for (let item of cookedRecipes) {
         data[`${item}_recipe`] = true;
       }
-      console.log(data, this.state)
       this.props.getSubscriptionEstimate(data)
     }
     // this.setState({ step: this.state.step + 1 });
@@ -185,14 +186,17 @@ class EditPlan extends Component {
     const data = {
       dog_id: dog.id,
       cooked_portion: dietPortion.cooked_portion || null,
-      kibble_portion: dietPortion.kibble_portion || null,
-      portion_adjusment: dietPortion.portion_adjusment || null
+      kibble_portion: null,
+      portion_adjusment: dietPortion.portion_adjusment || null,
+      chicken_recipe: false,
+      turkey_recipe: false,
+      lamb_recipe: false,
+      beef_recipe: false,
+      kibble_recipe: null,
     };
     ///not sure what to do if selected kibbleRecipes more than one
     if (kibbleRecipes && kibbleRecipes.length > 0) {
       data.kibble_recipe = kibbleRecipes[0];
-    } else {
-      data.kibble_recipe = null
     }
     for (let item of cookedRecipes) {
       data[`${item}_recipe`] = true;
@@ -212,7 +216,7 @@ class EditPlan extends Component {
     ///checking selected plans length.
     const selectedLength = filteredCooked + filteredKibble
 
-    if (selectedLength === 0) this.forceUpdate()
+    if (selectedLength === 0 && !dirty) this.forceUpdate()
     return (
       <div className="bg-recipeGray">
         <div className="font-messina text-center font-bold mb-4 text-black bg-recipeGray">
