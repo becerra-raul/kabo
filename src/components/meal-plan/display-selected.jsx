@@ -4,8 +4,9 @@ import lambIcon from "../../assets/images/recipe/lamb-recipe.png";
 import turkeyIcon from "../../assets/images/recipe/turkey-recipe.png";
 import beefIcon from "../../assets/images/recipe/beef-recipe.png";
 import FoodCard from "./food-card";
+import SelectedCard from "./selected-card";
 
-const MealPlanSelect = ({
+const DisplaySelected = ({
   type,
   index,
   recipes,
@@ -17,23 +18,16 @@ const MealPlanSelect = ({
   toggleKibble,
   selectedLength,
 }) => {
-  let icons = {
-    chicken: chickenIcon,
-    beef: beefIcon,
-    lamb: lambIcon,
-    turkey: turkeyIcon,
-  };
 
   return (
     <React.Fragment>
       {recipes &&
         recipes.map((food, idx) => (
-          <FoodCard
+          <SelectedCard
             key={idx}
             type={type}
             index={index}
             food={food}
-            icons={icons}
             selectedDog={selectedDog}
             selected={type === 'kibble'
               ? selectedKibble.includes(food.recipe)
@@ -51,4 +45,4 @@ const MealPlanSelect = ({
   );
 };
 
-export default MealPlanSelect;
+export default DisplaySelected;

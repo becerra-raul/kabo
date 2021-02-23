@@ -40,7 +40,6 @@ export const user = (state = initialState, action) => {
         subLoading: true,
       };
     case userConstants.SUBSCRIPTION_DATA_LOADED:
-      console.log(action);
       return {
         ...state,
         ...action.payload,
@@ -89,7 +88,7 @@ export const user = (state = initialState, action) => {
         ...state,
         ...action.payload,
         loading: false,
-        error: false
+        error: false,
       };
 
     case userConstants.UNPAUSE_SUBSCRIPTION_REQUESTED:
@@ -214,10 +213,10 @@ export const user = (state = initialState, action) => {
         errorMessage: '',
       };
     case userConstants.RESET_USER_LOADING:
-          return {
-            ...state,
-            loading: false,
-          };
+      return {
+        ...state,
+        loading: false,
+      };
 
     default:
       return state;

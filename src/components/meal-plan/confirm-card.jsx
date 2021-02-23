@@ -1,17 +1,6 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { Field, reduxForm } from 'redux-form'
-import LoadingCircle from '../partials/loading'
-import MealPlanSelect from './meal-plan-select'
-import { userActions } from '../../actions'
 import Modal from '../global/modal'
-import { Button } from '../../stories/Button'
 import _, { map } from 'underscore';
-import beefIcon from '../../assets/images/recipe/beef-recipe.png'
-import chickenIcon from '../../assets/images/recipe/chicken-recipe.png'
-import lambIcon from '../../assets/images/recipe/lamb-recipe.png'
-import turkeyIcon from '../../assets/images/recipe/turkey-recipe.png'
-
 
 const MealIcon = ({ source, notFirst }) => (
   <img

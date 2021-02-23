@@ -8,7 +8,7 @@ import { userActions } from "../../actions";
 import Billing from "../../components/profile/billing.jsx";
 import { AccountDetails } from "../../components/profile/account-details.jsx";
 import { DeliveryAddress } from "../../components/profile/delivery-address.jsx";
-
+import Loader from "../../loaders/profileLoader";
 class ProfilePage extends React.Component {
   constructor(props) {
     super(props);
@@ -33,8 +33,7 @@ class ProfilePage extends React.Component {
   }
 
   render() {
-    if (!this.props.dogs.length || !this.props.user.shipping_address)
-      return null;
+    if (!this.props.dogs.length || !this.props.user.shipping_address) return <Loader />;
     const { user, subscriptions, dogs, updatePaymentMethod } = this.props;
 
     const detailsCard =

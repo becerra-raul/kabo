@@ -150,3 +150,9 @@
        url('../../fonts/Bitstream-Cooper-Lt-BT-Bold.ttf') format('truetype'), /* Safari, Android, iOS */
        url('../../fonts/Bitstream-Cooper-Lt-BT-Bold.ttf') format('svg'); /* Legacy iOS */
 }
+/* css animations for loaders */
+
+.loaderClass {
+  animation: loader 1s infinite ease-in-out;
+  -webkit-animation: loader 1s infinite ease-in-out;
+}

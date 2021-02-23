@@ -21,7 +21,7 @@ const DailyDietPortion = ({
     };
     getDailyDietPortion(data);
     // console.log("Daily Diet Portion is loaded");
-  }, []);
+  }, [cookedRecipes, kibbleRecipes]);
 
   const handleSelect = (item) => {
     selectedDietPortion(item);
@@ -31,11 +31,11 @@ const DailyDietPortion = ({
 
   return (
     <React.Fragment>
-      <div className="w-full flex flex-col pt-9 pb-20 items-center bg-recipeGray">
+      <div className="w-full flex flex-col pt-9 items-center bg-recipeGray">
         <div className="container flex flex-col items-center">
 
-          <div className="mb-3 text-xl font-medium">Choose the Daily Portion</div>
-          <div className="p-5 md:w-1/2 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-5">
+          <div className="mb-3 text-xl font-medium">Select Your meal plan to see your portions</div>
+          <div className="p-5 md:w-4/5 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-5">
             {meal.getting_diet_portion && <LoadingCircle />}
             {meal &&
               meal.daily_diet_portion_data &&
