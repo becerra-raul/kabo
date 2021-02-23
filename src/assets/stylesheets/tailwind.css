@@ -24,14 +24,8 @@
     width: 100%;
 }
 
-@media only screen and (min-width: 620px) {
-    .responsive-unpause-modal-card {
-        width: 45%;
-    }
-
-    .global-modal-overlay {
-        background-color: (0,0,0,0.3);
-    }
+.global-modal-overlay {
+    background-color: rgba(0,0,0,0.3);
 }
 
 .filled-global-button {
@@ -40,6 +34,14 @@
     color: #ffffff;
 }
 
-.global-modal-overlay {
-    background-color: #ffffff;
+@media only screen and (min-width: 620px) {
+    .responsive-unpause-modal-card {
+        width: 45%;
+    }
+}
+
+@media only screen and (max-width: 620px) {
+    .global-modal-overlay {
+        background-color: #ffffff;
+    }
 }

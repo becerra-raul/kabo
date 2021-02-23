@@ -82,12 +82,14 @@ export const user = (state = initialState, action) => {
       return {
         ...state,
         ...action.payload,
+        loading: true,
       };
     case userConstants.PAUSE_SUBSCRIPTION_SUCCESS:
       return {
         ...state,
         ...action.payload,
         loading: false,
+        error: false
       };
 
     case userConstants.UNPAUSE_SUBSCRIPTION_REQUESTED:
@@ -205,6 +207,18 @@ export const user = (state = initialState, action) => {
         ...state,
         skipping_dog_delivery: false,
       };
+    case userConstants.RESET_ERROR:
+      return {
+        ...state,
+        error: false,
+        errorMessage: '',
+      };
+    case userConstants.RESET_USER_LOADING:
+          return {
+            ...state,
+            loading: false,
+          };
+
     default:
       return state;
   }

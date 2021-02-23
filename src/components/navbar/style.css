@@ -92,9 +92,12 @@
     font-weight: bold;
     font-size: 22px;
     line-height: 50px;
-    color: #000000;
+    color: #444444;
   }
 
+  .menu-item:hover {
+    color: #000000;
+  }
   .bm-menu-wrap {
     width: 100% !important;
     top: 0px;

@@ -65,7 +65,7 @@ class Navbar extends React.Component {
         <nav className="fixed md:relative md:h-28 sm:h-22 bg-white md:bg-none z-50 w-full" id="outer-container">
           <div className="py-8 flex items-center sm:justify-between sm:items-stretch">
             <div className="sm:hidden">
-              <Menu pageWrapId={ "page-wrap" } outerContainerId={ "outer-container" } right>
+              <Menu pageWrapId={ "page-wrap" } noTransition={true} outerContainerId={ "outer-container" } right>
                 <a id="home" className="menu-item" href="/redirect?location=kabo.co" >Kabo Homepage</a>
                 {loggedIn && <a id="account" className="menu-item" href="/profile">Your Account</a>}
                 <a id="blog" className="menu-item" href="/redirect?location=kabo.co/blog" >Blog</a>

@@ -85,6 +85,13 @@ const skipDogDelivery = (id) => ({
   payload: id,
 });
 
+const resetUserError = () => ({
+  type: userConstants.RESET_ERROR,
+});
+const resetUserLoading = () => ({
+  type: userConstants.RESET_USER_LOADING,
+});
+
 export const userActions = {
   getAccountData,
   pauseSubscription,
@@ -104,5 +111,7 @@ export const userActions = {
   updateDeliveryFrequency,
   openSkipDeliveryModal,
   skipDogDelivery,
-  updateUserPhoneEmail
+  updateUserPhoneEmail,
+  resetUserError,
+  resetUserLoading
 };

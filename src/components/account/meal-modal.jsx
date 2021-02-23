@@ -30,6 +30,7 @@ class MealPlanModal extends React.Component {
       pauseDisplay: "",
       submitted: false,
       showCancelBox: false,
+      pauseProcessing: false,
     };
     this.setDog = this.setDog.bind(this);
     this.toggleCancelBox = this.toggleCancelBox.bind(this);
@@ -53,16 +54,28 @@ class MealPlanModal extends React.Component {
         this.state.pauseType === "forever"
         ? this.state.pauseType
         : this.state.pauseUntil;
-
+    this.setState({pauseProcessing: true});
+    this.props.resetUserLoading();
+    if (this.props.error) {
+      this.props.resetUserError();
+    }
     this.props.pauseSubscription({
       dogId: dogId,
       pauseUntil: pauseUntil,
-    });
-    if (!this.props.error && !this.props.loading) {
-      this.setState({
-        showPauseBox: false,
-        showPauseBoxSuccess: true,
-      });
+    })
+
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.loading !== this.props.loading) {
+      //Checking if processing pause subscription and it successful, depends on loading
+      if (!this.props.error && !this.props.loading && this.state.pauseProcessing) {
+        this.setState({
+          showPauseBox: false,
+          showPauseBoxSuccess: true,
+          pauseProcessing: false,
+        });
+      }
     }
   }
 
@@ -139,8 +152,9 @@ class MealPlanModal extends React.Component {
             </div>
 
             <div className="lg:flex justify-between lg:mb-12 mb-8">
+              <div className="lg:w-96">
               <MealPlanCard noPrice dogIndex={dogIndex} portion={portion} />
-
+              </div>
               <div className="mt-6 sm:mt-0">
                 <a
                   className="text-sm font-semibold text-primary lg:mr-2 cursor-pointer"
@@ -346,7 +360,9 @@ class MealPlanModal extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   dispatch,
-  pauseSubscription: (data) => dispatch(userActions.pauseSubscription(data)),
+  pauseSubscription: async (data) => dispatch(userActions.pauseSubscription(data)),
+  resetUserError: () => dispatch(userActions.resetUserError()),
+  resetUserLoading: () => dispatch(userActions.resetUserLoading()),
   cancelSubscription: async (userId) =>
     await dispatch(userActions.cancelSubscription(userId)),
 });
