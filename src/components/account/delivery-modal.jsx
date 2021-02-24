@@ -56,7 +56,10 @@ const DeliveryModal = ({
 }) => {
   let readableNames = dogs && dogs.map((dog) => dog.name).join(' and ')
 
-  const PAUSED = (dogSubscription.status == "paused");
+  console.log(dogSubscription)
+
+  const PAUSED = dogSubscription.status == "paused";
+  const CANCELLED = dogSubscription.status == 'cancelled'
 
   let deliveryStatus;
   const nextDelivery = user.next_occurrencies[0];
@@ -74,14 +77,14 @@ const DeliveryModal = ({
 
   return (
     <div className="py-8 px-5 relative border-r border-l rounded-b-xl border-b border-gray-300">
-      {PAUSED ?
+      {PAUSED || CANCELLED ?
         <>
           { dogsLength > 1 && <DogSelector dogs={dogs} setDog={setDog} dogIndex={dogIndex} />}
           <span className="mb-5 text-base font-semibold">{readableNames}'s delivery is currently paused. Unpause to schedule your next delivery</span>
           <div className="my-8">
-            <MealPlanCard dogIndex={dogIndex} />
+            <MealPlanCard dogIndex={dogIndex} noPrice />
           </div>
-          <GlobalButton filled={true} styles="mb-7" text="Unpause Meal Plan"
+          <GlobalButton filled={true} styles="mb-7" text={PAUSED && 'Unpause Meal Plan', CANCELLED && 'Reactivate Meal Plan'}
             handleClick={() => showUnpauseBoxCallBack(true)}
           />
           <br />
@@ -90,7 +93,7 @@ const DeliveryModal = ({
           <span className="font-cooper text-25xl">{nextDelivery}</span>
 
           <Modal
-            title="Unpause Kabo"
+            title={PAUSED && "Unpause Kabo", CANCELLED && 'Reactivate Kabo'}
             isOpen={showUnpauseBox}
             onRequestClose={() => showUnpauseBoxCallBack(false)}
           >
