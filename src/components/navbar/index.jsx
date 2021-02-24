@@ -70,6 +70,7 @@ class Navbar extends React.Component {
                 {loggedIn && <a id="account" className="menu-item" href="/profile">Your Account</a>}
                 <a id="blog" className="menu-item" href="/redirect?location=kabo.co/blog" >Blog</a>
                 <a id="help" className="menu-item" href="/redirect?location=https://kabo.zendesk.com/">Help</a>
+                <a id="support" className="menu-item" href="https://kabo.zendesk.com/hc/en-us">Support</a>
                 {loggedIn && <a onClick={() => this.clickLogout()} className="menu-item" href="">Logout</a>}
               </Menu>
             </div>
@@ -85,6 +86,7 @@ class Navbar extends React.Component {
                         {/* <a href="/store" className={navStep === 2 ? active : inActive}>Store</a> */}
                         <a href="/orders" className={navStep === 3 ? active : inActive}>Orders</a>
                         <a href="/profile" className={navStep === 4 ? active : inActive}>Account</a>
+                        <a href="https://kabo.zendesk.com/hc/en-us" className={inActive} target="_blank">Support</a>
                       </div>
                     </div>
                   </div>

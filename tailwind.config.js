@@ -64,7 +64,7 @@ module.exports = {
     },
     fontFamily: {
       messina: ['Messinasans, sans-serif'],
-      cooper: ['Coooper', 'sans-serif'],
+      cooper: ['Cooper', 'sans-serif'],
     },
     container: {
       center: true,

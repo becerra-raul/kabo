@@ -217,8 +217,8 @@ class EditPlan extends Component {
 
     if (selectedLength === 0 && !dirty) this.forceUpdate()
     return (
-      <div className="lg:bg-recipeGray">
-        <div className="hidden lg:block font-messina text-center font-bold py-8 text-black bg-recipeGray text-xl">
+      <div className="md:bg-recipeGray">
+        <div className="hidden md:block font-messina text-center font-bold py-8 text-black bg-recipeGray text-xl">
           Choose 1 or 2 recipes per Order for {dog && dog.name}
 
         </div>
@@ -232,7 +232,7 @@ class EditPlan extends Component {
           />
         </div>
         {/* Grid visible in desktop views */}
-        <div className="hidden lg:flex justify-center customContainer mx-auto">
+        <div className="hidden md:flex justify-center customContainer mx-auto">
           <RecipeSelection
             user={user}
             showCooked={showCooked}
@@ -247,7 +247,7 @@ class EditPlan extends Component {
             toggleKibble={this.toggleKibble}
             isKibble={this.state.isKibble}
           />
-          <div className="lg:w-2/6 lg:pl-16">
+          <div className="md:w-2/6 md:pl-16">
             <DailyDietPortion
               meal={meal}
               dog={dog}
@@ -277,7 +277,7 @@ class EditPlan extends Component {
 
         {/* ------------- */}
 
-        <div className="lg:hidden grid grid-cols-1">
+        <div className="md:hidden grid grid-cols-1">
           <div>
             <div
               onClick={() => this.setState({ editRecipiesOpen: !editRecipiesOpen })}
@@ -292,7 +292,7 @@ class EditPlan extends Component {
             {editRecipiesOpen && (
               <div>
                 <FreshOrKibble
-                  extraClasses="lg:hidden bg-recipeGray"
+                  extraClasses="md:hidden bg-recipeGray"
                   showCooked={showCooked}
                   showKibble={showKibble}
                   setKibble={this.displayKibble}
