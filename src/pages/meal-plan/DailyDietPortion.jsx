@@ -5,6 +5,7 @@ import "./style.css";
 
 const DailyDietPortion = ({
   meal,
+  dog_id,
   dog,
   dietPortion,
   cookedRecipes,
@@ -12,30 +13,26 @@ const DailyDietPortion = ({
   getDailyDietPortion,
   kibbleRecipes
 }) => {
-  console.log(kibbleRecipes)
   useEffect(() => {
+    console.log(dog_id)
     const data = {
       cooked_recipes: cookedRecipes,
       dog_id: dog.id,
       kibble_recipe: kibbleRecipes[0]
     };
     getDailyDietPortion(data);
-    // console.log("Daily Diet Portion is loaded");
-  }, [cookedRecipes, kibbleRecipes]);
+  }, [cookedRecipes, kibbleRecipes, dog_id]);
 
   const handleSelect = (item) => {
     selectedDietPortion(item);
   };
 
-  // console.log(cookedRecipes,)
-
   return (
     <React.Fragment>
-      <div className="w-full flex flex-col pt-9 items-center bg-recipeGray">
-        <div className="container flex flex-col items-center">
-
-          <div className="mb-3 text-xl font-medium">Select Your meal plan to see your portions</div>
-          <div className="p-5 md:w-4/5 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-5">
+      <div className="w-full flex flex-col lg:pt-9 items-center bg-recipeGray">
+        <div className="container flex flex-col">
+          <div className="mb-6 text-xl font-medium hidden lg:block">Portions</div>
+          <div className="w-11/12 lg:w-full mx-auto grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-5">
             {meal.getting_diet_portion && <LoadingCircle />}
             {meal &&
               meal.daily_diet_portion_data &&

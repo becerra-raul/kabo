@@ -23,9 +23,9 @@ export default function OrderItemModal({ item, showModal, onClose }) {
           <div className="text-center text-sm mb-6">Guarantee analysis</div>
           {item &&
             item?.analysis &&
-            item?.analysis?.map((one) => {
+            item?.analysis?.map((one, i) => {
               return (
-                <div className="grid grid-cols-2 gap:2 w-2/3 my-2">
+                <div className="grid grid-cols-2 gap:2 w-2/3 my-2" key={i}>
                   <div className="font-semibold">{one[0]}</div>
                   <div className="font-semibold text-right">{one[1]}</div>
                 </div>

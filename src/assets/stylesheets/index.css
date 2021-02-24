@@ -156,3 +156,7 @@
   animation: loader 1s infinite ease-in-out;
   -webkit-animation: loader 1s infinite ease-in-out;
 }
+.customContainer{
+  max-width: 1280px;
+  margin: 0 auto;
+}

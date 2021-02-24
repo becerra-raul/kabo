@@ -12,7 +12,7 @@ const selectSubscriptionByDogId = (state, dogId) => {
     return subscription;
 };
 
-const selectDogs = (state) => state.user.dogs || [];
+const selectDogs = (state) => state.user && state.user.dogs ? state.user.dogs : [];
 
 const selectDogByIndex = (state, index) => {
     let dogs = selectDogs(state);

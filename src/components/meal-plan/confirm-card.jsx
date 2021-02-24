@@ -2,6 +2,13 @@ import React, { Component } from 'react'
 import Modal from '../global/modal'
 import _, { map } from 'underscore';
 
+const cookedRecipesObject = {
+  "beef": { key: "beef_recipe", imageIndex: 1, title: "Savoury Beef"},
+  "chicken": { key: "chicken_recipe", imageIndex: 0, title: "Tender Chicken"},
+  "lamb": { key: "lamb_recipe", imageIndex: 3, title: "Luscious Lamb"},
+  "turkey": { key: "turkey_recipe", imageIndex: 2, title: "hearty Turkey"},
+}
+
 const MealIcon = ({ source, notFirst }) => (
   <img
     src={source}
@@ -13,49 +20,38 @@ const MealIcon = ({ source, notFirst }) => (
 const ConfirmMeal = ({ dog, subs, onConfirm, cookedRecipes, kibble, portion, open, onClose, estimate, user }) => {
   if (!dog.chargebee_subscription_id) return null
   let cbID = dog.chargebee_subscription_id
-  ////resolved this error subs.[cbID]
+
   let subData = subs[cbID]
-  let totalReadable = (subData.invoice_estimate_total / 100).toFixed(2)
+  ////resolved NaN
+  let totalReadable = subData.invoice_estimate_total === "N/A"
+      ? 0
+      : (subData.invoice_estimate_total / 100).toFixed(2)
   const { cooked_recipes, kibble_recipes } = user
   let recipeArray = []
   let iconArray = []
 
-  function findString(array, string) {
-    let newArray = array.filter(word => word.includes(string))
-    if (newArray.length == 0) return false
-    else return true
-  }
-  if (findString(cookedRecipes, 'beef')) {
-    recipeArray.push('Savoury Beef')
-    iconArray.push(
-      <MealIcon key="beef_recipe" notFirst={iconArray.length > 0} source={cooked_recipes[1].image_url} />
-    )
-  }
-  if (findString(cookedRecipes, 'chicken ')) {
-    recipeArray.push('Tender Chicken')
-    iconArray.push(
-      <MealIcon key="chicken_recipe" notFirst={iconArray.length > 0} source={cooked_recipes[0].image_url} />
-    )
-  }
-  if (findString(cookedRecipes, 'lamb')) {
-    recipeArray.push('Luscious Lamb ')
-    iconArray.push(
-      <MealIcon key="lamb_recipe" notFirst={iconArray.length > 0} source={cooked_recipes[3].image_url} />
-    )
-  }
-  if (findString(cookedRecipes, 'turkey ')) {
-    recipeArray.push('hearty Turkey')
-    iconArray.push(
-      <MealIcon key="turkey_recipe" notFirst={iconArray.length > 0} source={cooked_recipes[2].image_url} />
-    )
-  }
+  cookedRecipes.forEach(key => {
+    if (key && cookedRecipesObject[key]) {
+      recipeArray.push(cookedRecipesObject[key].title);
+      iconArray.push(
+          <MealIcon
+              key={cookedRecipesObject[key].key}
+              notFirst={iconArray.length > 0}
+              source={cooked_recipes[cookedRecipesObject[key].imageIndex].image_url}
+          />
+      )
+    }
+  });
+
   if (kibble.length) {
     kibble.forEach(kib => {
-      recipeArray.push(`${kib} kibble`)
+      if (kib) {
+        recipeArray.push(`${kib} kibble`)
+      }
+      iconArray.push(
+          <MealIcon key="turkey_recipe" notFirst={iconArray.length > 0} source={kibble_recipes[0].image_url} />
+      )
     });
-    iconArray.push(
-      <MealIcon key="turkey_recipe" notFirst={iconArray.length > 0} source={kibble_recipes[0].image_url} />
-    )
   }
 
   // let portion = ''
@@ -65,7 +61,6 @@ const ConfirmMeal = ({ dog, subs, onConfirm, cookedRecipes, kibble, portion, ope
   // } else {
   //   portion = `${portion}% Kabo`
   // }
-
   return (
     <Modal
       title="Edit Meal Plan Confirmation"

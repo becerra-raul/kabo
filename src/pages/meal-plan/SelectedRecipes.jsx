@@ -21,9 +21,9 @@ class SelectedRecipes extends Component {
       selectedLength,
     } = this.props;
     return (
-      <div className="w-full flex flex-col py-9 items-center bg-recipeGray">
-        <div className="container flex flex-col items-center">
-          <div className=" grid grid-cols-1 w-full md:w-4/5 gap-10">
+      <div className="flex flex-col py-9 items-center bg-recipeGray">
+        <div className="container flex flex-col  w-11/12 mx-auto lg:w-full">
+          <div className=" grid grid-cols-1 w-full w-4/5 md:w-full gap-10">
             <div >
               <DisplaySelected
                 type="cooked"
@@ -47,6 +47,7 @@ class SelectedRecipes extends Component {
                 selectedLength={selectedLength}
               />
             </div>
+            <button class="rounded-lg bg-green-700 border border-green-700 hover:border-transparent focus:outline-none text-white text-sm md:text-base font-bold p-1 md:py-2 md:px-5  rounded mt-2 md:mt-0">Confirm updates</button>
           </div>
         </div>
       </div>

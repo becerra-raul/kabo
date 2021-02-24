@@ -48,7 +48,7 @@ class FrequencyModal extends React.Component {
     if (key && this.props.user) {
       let originalValue = this.props.user[key]
       this.setState({
-        changed: {...this.state.changed, [key]: `${event.target.value}` !== `${originalValue}`}
+        changed: { ...this.state.changed, [key]: `${event.target.value}` !== `${originalValue}` }
       })
     }
   }
@@ -72,11 +72,7 @@ class FrequencyModal extends React.Component {
             Reminder about Deliveries
           </div>
           <div className="text-black text-sm font-normal mt-3">
-            Keep in mind changes you make to your delivery amount,
-            frequency and next delivery date will only affect your next delivery
-          </div>
-          <div className="text-primary font-semibold m-3" >
-            Learn more about our deliveries
+            Keep in mind, changes made to your account will be reflected in your next delivery date
           </div>
         </div>
         <form
@@ -87,11 +83,11 @@ class FrequencyModal extends React.Component {
             Amount of Food Per dog
           </div>
           <select
-              initialValue={amount_of_food}
-              className="w-full" name="amount_of_food"
-              label="How Often"
-              component="select"
-              onChange={this.handleChange}
+            initialValue={amount_of_food}
+            className="w-full" name="amount_of_food"
+            label="How Often"
+            component="select"
+            onChange={this.handleChange}
           >
             {SelectOptions(amount_of_food_options)}
           </select>
@@ -101,8 +97,8 @@ class FrequencyModal extends React.Component {
             How Often?
           </div>
           <select initialvalue={how_often} onChange={this.handleChange}
-                  className="w-full" name="how_often" label="How Often"
-                  component="select"
+            className="w-full" name="how_often" label="How Often"
+            component="select"
           >
             {SelectOptions(how_often_options)}
           </select>
@@ -112,8 +108,8 @@ class FrequencyModal extends React.Component {
             Next Delivery Date
           </div>
           <select className="w-full " onChange={this.handleChange}
-                  name="starting_date" label="How Often"
-                  component="select"
+            name="starting_date" label="How Often"
+            component="select"
           >
             {SelectOptions(delivery_starting_date_options)}
           </select>
