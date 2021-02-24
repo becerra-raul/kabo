@@ -63,20 +63,18 @@ const unpauseSubscription = (data) => {
     true,
     true
   );
-
   return fetch(endpointConstants.UNPAUSE_SUBSCRIPTION, requestOptions)
     .then(request.handleResponse)
     .then((res) => res);
 };
 
-const cancelSubscription = (userId) => {
+const cancelSubscription = ({dog_id}) => {
   const requestOptions = request.options(
     "POST",
-    JSON.stringify({ id: userId }),
+    JSON.stringify({ dog_id }),
     true,
-    false
+    true
   );
-
   return fetch(endpointConstants.CANCEL_SUBSCRIPTION, requestOptions)
     .then(request.handleResponse)
     .then((res) => res);
@@ -221,7 +219,6 @@ export const userService = {
   pauseSubscription,
   unpauseSubscription,
   cancelSubscription,
-  getSubscriptionData,
   getBreedData,
   updateDeliveryAddress,
   updatePwd,

@@ -2,7 +2,10 @@ import React from "react";
 import Radio from "../global/radio";
 import beefIcon from "../../assets/images/recipe/beef-100@2x.jpg";
 
-const CancelDelivery = ({ cancelType, setCancelType, dogIndex }) => {
+const CancelDelivery = ({ cancelType, setCancelType, dogIndex, dogName, subscription }) => {
+  let price = subscription.invoice_estimate_total === "N/A"
+      ? 0
+      : (subscription.invoice_estimate_total / 100).toFixed(2)
   return (
     <React.Fragment>
       <div className="lg:flex justify-between lg:mb-4 mb-4">
@@ -14,7 +17,7 @@ const CancelDelivery = ({ cancelType, setCancelType, dogIndex }) => {
               <p className="text-sm">14 days worth of full-meal</p>
             </div>
           </div>
-          <h5 className="text-base font-semibold ">$43.12</h5>
+          <h5 className="text-base font-semibold ">$ {price}</h5>
         </div>
         <div className="">
           <a
@@ -37,27 +40,27 @@ const CancelDelivery = ({ cancelType, setCancelType, dogIndex }) => {
           <Radio
             value="1-delivery"
             className="mb-7"
-            text="Pause Blake’s account for 1 delivery"
+            text={`Pause ${dogName} account for 1 delivery`}
             onChange={() => setCancelType("1-delivery")}
             selected={cancelType === "1-delivery"}
           />
           <Radio
             value="2-delivery"
             className="mb-7"
-            text="Pause Blake’s account for 2 delivery"
+            text={`Pause ${dogName} account for 2 delivery`}
             onChange={() => setCancelType("2-delivery")}
             selected={cancelType === "2-delivery"}
           />
           {/* <Radio
               value="indefinitely"
-              text="Pause Blake’s account indefinitely"
+              text="Pause ${dogName} account indefinitely"
               onChange={() => setCancelType("indefinitely")}
               selected={cancelType === "indefinitely"}
             /> */}
           <Radio
             value="specific-date"
             className="mb-7"
-            text="Cancel Blake's deliveries"
+            text={`Cancel ${dogName} deliveries`}
             onChange={() => setCancelType("specific-date")}
             selected={cancelType === "specific-date"}
           />

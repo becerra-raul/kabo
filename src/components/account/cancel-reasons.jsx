@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import Radio from "../global/radio";
 import RadioMessage from "./RadioMessage";
 
-const CancelReason = () => {
-  const [reason, setReason] = useState("");
+const CancelReason = ({reason, setReason, dogName, lastName}) => {
   return (
     <React.Fragment>
       <p className="text-lg text-center font-medium text-gray-800">
@@ -21,7 +20,7 @@ const CancelReason = () => {
           {reason === "expectations" && (
             <RadioMessage
               title="Let us make things right!"
-              text="Our Dog Care & Nutrition team is eager to listen to your feedback and concerns. Schedule an appointment today and we will do our best to make sure your issue is resolved as quickly as possible!"
+              text={`Our Dog Care & Nutrition team is eager to listen to your feedback and concerns. Schedule an appointment today and we will do our best to make sure your issue is resolved as quickly as possible!`}
               buttonTitle="Get 50% off now"
             />
           )}
@@ -38,7 +37,7 @@ const CancelReason = () => {
           {reason === "1" && (
             <RadioMessage
               title="Book an appointment with Dr. Suzee!"
-              text="We encourage you to take advantage of Kabo's certified veternarian to discuss any health-related matters regarding [dog name]. Schedule a virtual appoinment with Dr. Suzee [Last Name] to evaluate all of [dog name]'s dietary needs!"
+              text={`We encourage you to take advantage of Kabo's certified veternarian to discuss any health-related matters regarding ${dogName}. Schedule a virtual appoinment with Dr. Suzee ${lastName} to evaluate all of ${dogName}'s dietary needs!`}
               buttonTitle="Get 50% off now"
             />
           )}
@@ -54,8 +53,8 @@ const CancelReason = () => {
           />
           {reason === "2" && (
             <RadioMessage
-              title="Need help finding the perfect diet for [dog name]?"
-              text="We're sad to see [dog name] go but we want to continue to help you find the best diet for [dog name]. Check out our blogs where our Research & Development team share their thoughts on all things dog food!"
+              title={`Need help finding the perfect diet for ${dogName}?`}
+              text={`We're sad to see ${dogName} go but we want to continue to help you find the best diet for ${dogName}. Check out our blogs where our Research & Development team share their thoughts on all things dog food!`}
               buttonTitle="Get 50% off now"
             />
           )}
