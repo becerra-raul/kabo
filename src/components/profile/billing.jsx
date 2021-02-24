@@ -4,8 +4,24 @@ import PaymentCardIcon from "../global/payment-card-icon.jsx";
 import OrderCard from "../global/order-card.jsx";
 import ChangePaymentMethodModal from "./change-payment-method-modal";
 import { Link } from 'react-router-dom'
+import PauseMealModal from "../account/PauseMealModal";
+import Modal from "../global/modal";
+import CancelMealModal from "../account/cancel-meal-modal";
 
 class Billing extends React.Component {
+  constructor(props) {
+        super(props);
+        this.state = {
+            showPauseBox: false,
+            showCancelBox: false,
+        };
+      this.toggleCancelBox = this.toggleCancelBox.bind(this);
+  }
+
+  toggleCancelBox() {
+     this.setState({ showCancelBox: !this.state.showCancelBox });
+  }
+
   toggle = () => {
     const { open_payment_modal } = this.props;
     this.props.openUpdatePaymentModal(!open_payment_modal);
@@ -62,6 +78,39 @@ class Billing extends React.Component {
         </div>
         <Link to={`/orders`} className="font-bold text-primary border rounded-xl py-2 px-6 text-base font-bold text-primary button-border focus:outline-none">View All Orders</Link>
 
+        <div className="flex justify-between px-7 mt-7">
+              <button
+                  type="button"
+                  onClick={() => {
+                      this.setState({ showPauseBox: true });
+                  }}
+                  className="text-primary font-bold focus:outline-none"
+              >
+                  Pause Meals
+              </button>
+              <button
+                  type="button"
+                  onClick={this.toggleCancelBox}
+                  className="text-primary font-bold"
+              >
+                  Cancel Meals
+              </button>
+          </div>
+
+        <Modal title="Cancel Kabo"
+             isOpen={this.state.showCancelBox}
+             onRequestClose={this.toggleCancelBox}
+          >
+              <CancelMealModal closeHandler={() => this.setState({showCancelBox: false})}/>
+        </Modal>
+
+        <Modal
+              title="Pause Kabo"
+              isOpen={this.state.showPauseBox}
+              onRequestClose={() => this.setState({ showPauseBox: false })}
+          >
+             <PauseMealModal closeModal={() => this.setState({ showPauseBox: false })}/>
+        </Modal>
         <ChangePaymentMethodModal
           isOpen={this.props.open_payment_modal}
           toggle={this.toggle}
