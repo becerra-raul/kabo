@@ -30,9 +30,9 @@ const unpauseSubscription = (data) => ({
   payload: data,
 });
 
-const cancelSubscription = (userID) => ({
+const cancelSubscription = (payload) => ({
   type: userConstants.CANCEL_SUBSCRIPTION_REQUESTED,
-  payload: userID,
+  payload: payload,
 });
 
 const updateDeliveryAddress = (data) => ({
@@ -74,7 +74,6 @@ const  updateUserPhoneEmail = (data) => ({
   payload: data,
 });
 
-
 const openSkipDeliveryModal = (isOpen) => ({
   type: userConstants.OPEN_SKIP_DELIVERY_MODAL,
   payload: isOpen,
@@ -91,6 +90,8 @@ const resetUserError = () => ({
 const resetUserLoading = () => ({
   type: userConstants.RESET_USER_LOADING,
 });
+
+const setUserLoading = (key, value) => ({type: userConstants.SET_USER_LOADING, key, value})
 
 export const userActions = {
   getAccountData,
@@ -113,5 +114,6 @@ export const userActions = {
   skipDogDelivery,
   updateUserPhoneEmail,
   resetUserError,
-  resetUserLoading
+  resetUserLoading,
+  setUserLoading
 };

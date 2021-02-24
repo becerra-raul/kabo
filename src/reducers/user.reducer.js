@@ -7,6 +7,7 @@ const initialState = {
   orders: [],
   error: false,
   loading: true,
+  loadingKeys: {},
 
   open_payment_modal: false,
   updating_payment_method: false,
@@ -212,6 +213,28 @@ export const user = (state = initialState, action) => {
         ...state,
         skipping_dog_delivery: false,
       };
+
+    case userConstants.CANCEL_SUBSCRIPTION_REQUESTED: {
+      return {
+        ...state,
+        cancelationInfo: action.payload,
+        loadingKeys: {...state.loadingKeys, [userConstants.CANCEL_SUBSCRIPTION_REQUESTED]: true},
+        error: false,
+      };
+    }
+    case userConstants.CANCEL_SUBSCRIPTION_SUCCESS: {
+      let nextState = {...state};
+      if (action.payload.subscription.id) {
+        nextState.subscriptions[action.payload.subscription.id] = {
+          ...nextState.subscriptions[action.payload.subscription.id],
+          ...action.payload.subscription
+        };
+      }
+      return {
+        ...nextState,
+        error: false,
+      };
+    }
     case userConstants.RESET_ERROR:
       return {
         ...state,
@@ -224,6 +247,19 @@ export const user = (state = initialState, action) => {
         loading: false,
       };
 
+    case userConstants.SET_USER_LOADING: {
+      let newState = state;
+      if (action.key) {
+        if (!newState.loadingKeys[action.key] && action.value) {
+          newState = {...state}
+          newState.loadingKeys[action.key] = action.value;
+        } else if (!action.value && newState.loadingKeys.hasOwnProperty(action.key)) {
+          newState = {...state};
+          delete newState.loadingKeys[action.key]
+        }
+      }
+      return newState;
+    }
     default:
       return state;
   }

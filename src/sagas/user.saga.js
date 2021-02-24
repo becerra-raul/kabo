@@ -1,7 +1,8 @@
-import { takeLatest, call, put } from 'redux-saga/effects';
+import { takeLatest, call, put, all } from 'redux-saga/effects';
 
 import { userService } from '../services';
 import { userConstants, otherConstants } from '../constants';
+import {userActions} from "../actions/user.action";
 
 function* getAccountDataSaga() {
   try {
@@ -60,12 +61,18 @@ function* getOrderDataSaga() {
   }
 }
 
-function* cancelSubscriptionSaga() {
+function* cancelSubscriptionSaga(action) {
   try {
-    const payload = yield call(userService.cancelSubscription);
-    yield put({ type: userConstants.CANCEL_SUBSCRIPTION_REQUESTED, payload });
+    const payload = yield call(userService.cancelSubscription, action.payload);
+    yield all([
+      put({ type: userConstants.CANCEL_SUBSCRIPTION_SUCCESS, payload }),
+      put(userActions.setUserLoading(userConstants.CANCEL_SUBSCRIPTION_REQUESTED, false))
+    ]);
   } catch (e) {
-    yield put({ type: otherConstants.REQUEST_ERROR, payload: e });
+    yield all([
+      put({ type: otherConstants.REQUEST_ERROR, payload: e }),
+      put(userActions.setUserLoading(userConstants.CANCEL_SUBSCRIPTION_REQUESTED, false)),
+    ]);
   }
 }
 
