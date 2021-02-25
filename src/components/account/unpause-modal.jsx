@@ -65,7 +65,7 @@ class UnpauseMealPlanModal extends React.Component {
       const discountDescription = "50% off discount"
       const nextCharge = "$31.23"
       const address1 = user.subscription.shipping_address.line1
-      const address2 = `${user.subscription.shipping_address.city}, ${user.subscription.shipping_address.state} ${user.subscription.shipping_address.zip}`
+      const address2 = `${user.subscription.shipping_address.city}, ${user.subscription.shipping_address.country} ${user.subscription.shipping_address.zip}`
 
       const nextDeliveries = user.next_occurrencies;
 
