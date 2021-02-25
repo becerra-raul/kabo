@@ -17,11 +17,6 @@ class LoginPage extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  componentDidMount() {
-    // reset login status
-    this.props.logout()
-  }
-
   handleChange(e) {
     const { name, value } = e.target
     this.setState({ [name]: value })
@@ -81,8 +76,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => (
   {
-    login: (email, password) => dispatch(authenticationActions.login({ email, password })),
-    logout: () => dispatch(authenticationActions.logout()),
+    login: (email, password) => dispatch(authenticationActions.login({ email, password }))
   }
 )
 

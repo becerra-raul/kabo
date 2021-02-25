@@ -26,6 +26,7 @@ class DeliveryModalWrapper extends React.Component {
     this.setState({
       dogIndex: i,
     });
+    this.props.setDogIndex(i)
   }
   showUnpauseBoxCallBack(val) {
     this.setState({ showUnpauseBox: val })

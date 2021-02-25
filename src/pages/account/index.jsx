@@ -13,6 +13,7 @@ import FrequencyModal from "../../components/account/delivery-frequency.jsx";
 import DogImage from "../../assets/images/Badge-Labrador-Retriever.svg";
 import HomeLoader from "../../loaders/homeLoader";
 import { userActions } from "../../actions";
+import { userSelectors } from "../../selectors/user.selectors";
 
 class AccountPage extends React.Component {
   constructor(props) {
@@ -21,11 +22,18 @@ class AccountPage extends React.Component {
       nextExpanded: !isMobile,
       mealExpanded: false,
       frequencyExpanded: false,
+      dogsIndex: 0,
     };
     this.openModal = this.openModal.bind(this);
   }
 
-  openModal(name) {
+  openModal(name, isCardDisable) {
+    if (
+      name === "frequencyExpanded" ||
+      (name === "mealExpanded" && isCardDisable)
+    ) {
+      return;
+    }
     this.setState({
       [name]: !this.state[name],
     });
@@ -36,27 +44,40 @@ class AccountPage extends React.Component {
     this.props.getSubscriptionData();
     this.props.getRecipeData();
   }
+  setDogIndex = (i) => {
+    this.setState({ dogsIndex: i });
+  };
 
   render() {
     if (!this.props.dogs.length) return <HomeLoader />;
-    const { user, subscriptions, dogs } = this.props;
+    const { user, subscriptions, dogs, globalState } = this.props;
 
     let dogNames = dogs.map((dog, i) => {
       return dog.name;
     });
+
     let readableNames = dogNames.join(" and ");
+    let dogSubscription = userSelectors.selectSubscriptionByDogIndex(
+      globalState,
+      this.state.dogsIndex
+    );
+    let isCardDisable =
+      dogSubscription.status === "cancelled" ||
+      dogSubscription.status === "paused";
 
     const sectionHeader = (stateValue, Icon, text, Modal) => {
       let expanded = this.state[stateValue];
+
       return (
         <div>
           <div
-            onClick={() => this.openModal(stateValue)}
+            onClick={() => this.openModal(stateValue, isCardDisable)}
             className={`flex bg-account justify-between items-center h-12 text-xl font-light p-3 cursor-pointer 
-              ${expanded
-                ? "rounded-t-xl border-t border-l border-r border-gray-300"
-                : "rounded-xl"
-              }`}
+              ${
+                expanded
+                  ? "rounded-t-xl border-t border-l border-r border-gray-300"
+                  : "rounded-xl"
+              } ${stateValue === "frequencyExpanded" || stateValue ===  "mealExpanded" && isCardDisable ? "opacity-40" : ""}`}
           >
             <div className="flex justify-between items-center  h-full">
               <div className="w-8 h-8 mr-6">
@@ -69,7 +90,7 @@ class AccountPage extends React.Component {
               style={{ transform: expanded ? "rotateX(180deg)" : null }}
             />
           </div>
-          {expanded && <Modal />}
+          {expanded && <Modal setDogIndex={this.setDogIndex} />}
         </div>
       );
     };
@@ -128,6 +149,7 @@ const mapStateToProps = (state) => {
   const { subscriptions, dogs } = state.user;
   return {
     user,
+    globalState: state,
     subscriptions,
     dogs,
   };
