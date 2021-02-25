@@ -53,11 +53,12 @@ class OrderDetail extends React.Component {
               <div className='text-sm font-semibold mb-2'>{order.total}</div>
               <div className='text-sm  mb-2 md-max-hidden'>{order.date}</div>
               <div className='text-sm  mb-2 md:hidden'>{order.date_mobile}</div>
-              <div className=' flex justify-start mb-11 items-center'>
+              <div className=' flex justify-start mb-2 items-center'>
                 <div className='text-sm '>{order.payment_status}</div>
                 <img src={visaIcon} className='ml-2 mr-2'></img>
                 <div className=' text-sm'>{order.card}</div>
               </div>
+              <div className='text-sm  mb-11 md-max-hidden'>{order?.plan || ""}</div>
 
               <div className='text-2xl font-bold mb-2'>Items</div>
               {order.items.map((item, index) => {

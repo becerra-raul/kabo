@@ -29,7 +29,7 @@ class AccountPage extends React.Component {
 
   openModal(name, isCardDisable) {
     if (
-      name === "frequencyExpanded" ||
+      name === "frequencyExpanded" && isCardDisable ||
       (name === "mealExpanded" && isCardDisable)
     ) {
       return;
@@ -73,11 +73,10 @@ class AccountPage extends React.Component {
           <div
             onClick={() => this.openModal(stateValue, isCardDisable)}
             className={`flex bg-account justify-between items-center h-12 text-xl font-light p-3 cursor-pointer 
-              ${
-                expanded
-                  ? "rounded-t-xl border-t border-l border-r border-gray-300"
-                  : "rounded-xl"
-              } ${stateValue === "frequencyExpanded" || stateValue ===  "mealExpanded" && isCardDisable ? "opacity-40" : ""}`}
+              ${expanded
+                ? "rounded-t-xl border-t border-l border-r border-gray-300"
+                : "rounded-xl"
+              } ${stateValue === "frequencyExpanded" && isCardDisable || stateValue === "mealExpanded" && isCardDisable ? "opacity-40" : ""}`}
           >
             <div className="flex justify-between items-center  h-full">
               <div className="w-8 h-8 mr-6">

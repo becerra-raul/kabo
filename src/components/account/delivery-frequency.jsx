@@ -63,7 +63,6 @@ class FrequencyModal extends React.Component {
     const SelectOptions = (array,) => (array.map((delayOption, i) => (
       <option className="w-full" key={i} value={delayOption.value}>{delayOption.label}  </option>
     )))
-    console.log(submitted, error, loading)
 
     return (
       <div className="py-8 px-5 relative border-r border-l rounded-b-xl border-b border-gray-300">

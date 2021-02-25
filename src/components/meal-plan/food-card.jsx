@@ -57,7 +57,7 @@ const FoodCard = ({
             onClick={() => selectKibbleRecipe(food)}
             disabled={selectedLength >= 2 && !selected && !kibbleOnlyNull}
           >
-            {selected ? 'Recipe Added' : 'Add Recipe'}
+            {selected ? 'Remove Recipe' : 'Add Recipe'}
           </button>
         ) : (
             <button
@@ -65,7 +65,7 @@ const FoodCard = ({
               onClick={() => selectCookedFood(food)}
               disabled={selectedLength >= 2 && !selected}
             >
-              {selected ? 'Recipe Added' : 'Add Recipe'}
+              {selected ? 'Remove Recipe' : 'Add Recipe'}
             </button>
           )}
         <OrderItemModal item={food} showModal={details} onClose={() => { openDetails(false) }} />
