@@ -8,6 +8,7 @@ export const endpointConstants = {
   GET_ACCOUNT_DATA: `${appDomain}/${apiVersion}/user/details`,
   PAUSE_SUBSCRIPTION: `${appDomain}/${apiVersion}/user/subscriptions/pause`,
   UNPAUSE_SUBSCRIPTION: `${appDomain}/${apiVersion}/user/subscriptions/resume`,
+  REACTIVATE_SUBSCRIPTION: `${appDomain}/${apiVersion}/user/subscriptions/reactivate`,
   GET_SUBSCRIPTION_DATA: `${appDomain}/${apiVersion}/user/subscriptions`,
   CANCEL_SUBSCRIPTION: `${appDomain}/${apiVersion}/user/subscriptions/cancel`,
   GET_RECIPE_DATA: `${appDomain}/${apiVersion}/onboarding/recipes`,

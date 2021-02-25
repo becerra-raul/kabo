@@ -46,7 +46,8 @@ class UnpauseMealPlanModal extends React.Component {
   
       this.props.unpauseSubscription({
         dog_id: dogId,
-        unpause_date: ""
+        unpause_date: "",
+        reactivate: this.props.isCancelled
       });
     }
   
@@ -219,7 +220,7 @@ class UnpauseSuccessSummary extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-unpauseSubscription: (userId) => dispatch(userActions.unpauseSubscription(userId)),
+  unpauseSubscription: (userId) => dispatch(userActions.unpauseSubscription(userId)),
 })
 
 function mapStateToProps(state) {
