@@ -85,7 +85,7 @@ const DeliveryModal = ({
           <div className="my-8">
             <MealPlanCard dogIndex={dogIndex} noPrice />
           </div>
-          <GlobalButton filled={true} styles="mb-7" text={PAUSED && 'Unpause Meal Plan', CANCELLED && 'Reactivate Meal Plan'}
+          <GlobalButton filled={true} styles="mb-7" text={PAUSED ? 'Unpause Meal Plan' : CANCELLED && 'Reactivate Meal Plan'}
             handleClick={() => showUnpauseBoxCallBack(true)}
           />
           <br />
@@ -94,11 +94,11 @@ const DeliveryModal = ({
           <span className="font-cooper text-25xl">{nextDelivery}</span>
 
           <Modal
-            title={PAUSED && "Unpause Kabo", CANCELLED && 'Reactivate Kabo'}
+            title={PAUSED ? "Unpause Kabo" : CANCELLED ? 'Reactivate Kabo' : ""}
             isOpen={showUnpauseBox}
             onRequestClose={() => showUnpauseBoxCallBack(false)}
           >
-            <UnpauseMealPlanModal dogs={dogs} dogIndex={dogIndex} />
+            <UnpauseMealPlanModal dogs={dogs} dogIndex={dogIndex} isCancelled={CANCELLED} />
           </Modal>
         </>
         :

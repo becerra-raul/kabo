@@ -13,12 +13,35 @@ class Billing extends React.Component {
         super(props);
         this.state = {
             showPauseBox: false,
+            showPauseButton: true,
             showCancelBox: false,
+            showCancelButton: true,
         };
       this.toggleCancelBox = this.toggleCancelBox.bind(this);
   }
 
-  toggleCancelBox() {
+  getCalculateShowButtons = (subscriptions) => {
+      let statuses = Object.keys(subscriptions).map(key => subscriptions[key].status);
+      let showPause = statuses.filter(s => s === 'paused').length !== statuses.length;
+      let showCancel = statuses.filter(s => s === 'cancelled').length !== statuses.length;
+      return {showPause, showCancel};
+  }
+
+  componentDidMount() {
+      const {subscriptions} = this.props.user;
+      const {showPause, showCancel} = this.getCalculateShowButtons(subscriptions);
+      this.setState({showPauseButton: showPause, showCancelButton: showCancel})
+  }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+      const {subscriptions} = this.props.user;
+      const {showPause, showCancel} = this.getCalculateShowButtons(subscriptions);
+      if (prevState.showPauseButton !== showPause || prevState.showCancelButton !== showCancel) {
+          this.setState({showPauseButton: showPause, showCancelButton: showCancel})
+      }
+  }
+
+    toggleCancelBox() {
      this.setState({ showCancelBox: !this.state.showCancelBox });
   }
 
@@ -29,8 +52,8 @@ class Billing extends React.Component {
 
   render() {
     const { user } = this.props;
+    const { showPauseButton, showCancelButton } = this.state;
     const { orders } = user;
-    console.log(user);
 
     const ccLastFour = user.card.last4;
 
@@ -79,22 +102,23 @@ class Billing extends React.Component {
         <Link to={`/orders`} className="font-bold text-primary border rounded-xl py-2 px-6 text-base font-bold text-primary button-border focus:outline-none">View All Orders</Link>
 
         <div className="flex justify-between px-7 mt-7">
-              <button
-                  type="button"
-                  onClick={() => {
-                      this.setState({ showPauseBox: true });
-                  }}
-                  className="text-primary font-bold focus:outline-none"
-              >
-                  Pause Meals
-              </button>
-              <button
-                  type="button"
-                  onClick={this.toggleCancelBox}
-                  className="text-primary font-bold"
-              >
-                  Cancel Meals
-              </button>
+            {showPauseButton ? <button
+                type="button"
+                onClick={() => {
+                    this.setState({ showPauseBox: true });
+                }}
+                className="text-primary font-bold focus:outline-none"
+            >
+                Pause subscription
+            </button> : <span> </span>}
+            {showCancelButton
+                ? <button
+                    type="button"
+                    onClick={this.toggleCancelBox}
+                    className="text-primary font-bold"
+                >
+                    Manage subscription
+                </button> : <span> </span>}
           </div>
 
         <Modal title="Cancel Kabo"

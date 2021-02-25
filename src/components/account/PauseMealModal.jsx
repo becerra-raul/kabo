@@ -8,7 +8,7 @@ import {ReactComponent as FilledCircle} from "../../assets/images/filled-circle.
 import {userActions} from "../../actions";
 import {connect} from "react-redux";
 
-const PauseMealModal = ({dogIndex, dogs, error, loading, resetUserLoading, resetUserError, pauseSubscription, closeModal}) => {
+const PauseMealModal = ({dogIndex, dogs, subscriptions, error, loading, resetUserLoading, resetUserError, pauseSubscription, closeModal}) => {
     const [currentDogIndex, setCurrentDogIndex] = useState(dogIndex ? dogIndex : 0);
     const [pauseBoxType, setPauseBoxType] = useState("MAIN");
     const [pauseType, setPauseType] = useState("1_delivery");
@@ -45,7 +45,9 @@ const PauseMealModal = ({dogIndex, dogs, error, loading, resetUserLoading, reset
         }
     }, [loading]);
 
-    console.log(pauseUntil)
+    const statuses = Object.keys(subscriptions).map(key =>
+        ({dog_id: subscriptions[key].dog_id, status: subscriptions[key].status}));
+    const isPaused = statuses.filter(s => +s.dog_id === +currentDog.id && s.status !== 'active').length;
     return pauseBoxType === "MAIN"
         ?
         <div className="p-6">
@@ -72,6 +74,7 @@ const PauseMealModal = ({dogIndex, dogs, error, loading, resetUserLoading, reset
                     </a>
                 </div>
             </div>
+            {isPaused ? <div className="text-red-500 text-s mt-1">Plan already paused or Cancelled.</div> : null}
             <div className="lg:flex justify-between lg:mb-9">
                 <div className="lg:w-80">
                     <Radio
@@ -150,8 +153,9 @@ const PauseMealModal = ({dogIndex, dogs, error, loading, resetUserLoading, reset
             </div>
             <div>
                 <button
-                    className="rounded-xl py-3 px-8 text-base font-bold bg-primary text-white"
+                    className={`rounded-xl py-3 px-8 ${isPaused ? 'opacity-50' : ''} text-base font-bold bg-primary text-white`}
                     onClick={pauseMeal}
+                    disabled={!isPaused}
                 >
                     Save Changes
                 </button>

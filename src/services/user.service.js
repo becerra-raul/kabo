@@ -63,7 +63,7 @@ const unpauseSubscription = (data) => {
     true,
     true
   );
-  return fetch(endpointConstants.UNPAUSE_SUBSCRIPTION, requestOptions)
+  return fetch(data.reactivate ? endpointConstants.REACTIVATE_SUBSCRIPTION : endpointConstants.UNPAUSE_SUBSCRIPTION, requestOptions)
     .then(request.handleResponse)
     .then((res) => res);
 };

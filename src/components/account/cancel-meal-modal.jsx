@@ -22,6 +22,7 @@ const CancelMealModal = ({
   const [dogIndex, setDogIndex] = useState(0);
   const [requestInitiated, setRequestInitiated] = useState(false);
   const [reason, setReason] = useState("");
+  const [isCancelled, setIsCancelled] = useState("");
 
   const currentDog = dogs[dogIndex] || {};
   let dogSubscription = {};
@@ -30,6 +31,12 @@ const CancelMealModal = ({
       dogSubscription = subscriptions[key];
     }
   });
+
+  useEffect(() => {
+    const statuses = Object.keys(subscriptions).map(key =>
+        ({dog_id: subscriptions[key].dog_id, status: subscriptions[key].status}));
+    setIsCancelled(!!statuses.filter(s => +s.dog_id === +currentDog.id && s.status === 'cancelled').length);
+  }, [dogIndex])
 
   useEffect(() => {
     setStep(1);
@@ -92,11 +99,11 @@ const CancelMealModal = ({
         )}
         <button
           className={`rounded-xl py-3 px-8 text-base font-bold bg-primary ${
-            dogSubscription.status === "cancelled" || loading 
+              isCancelled || loading 
               ? "opacity-50" : ''} focus:outline-none text-white mt-2`}
               // onClick={() => cancelUserSubscription(currentDog.id)}
           onClick={() => handleStep(step)}
-          disabled={dogSubscription.status === "cancelled" || loading}
+          disabled={isCancelled || loading}
         >
           {loading && <i className="fas fa-circle-notch fa-spin mr-2" />}
           {step === 2 ? 'Confirm' : 'Next'}
