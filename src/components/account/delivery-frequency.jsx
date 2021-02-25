@@ -82,7 +82,7 @@ class FrequencyModal extends React.Component {
             Amount of Food Per dog
           </div>
           <select
-            initialValue={amount_of_food}
+            initialvalue={amount_of_food}
             className="w-full" name="amount_of_food"
             label="How Often"
             component="select"
