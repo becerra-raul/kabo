@@ -3,9 +3,10 @@ import React from "react";
 import { connect } from "react-redux";
 import { isMobile } from 'react-device-detect';
 
-import { ReactComponent as DeliveryBox } from "../../assets/images/delivery-box.svg";
+import { ReactComponent as DeliveryBox } from "../../assets/images/box-colour.svg";
 import { ReactComponent as Arrow } from "../../assets/images/Vectorarrow.svg";
-import { ReactComponent as MealBox } from "../../assets/images/meal-plan.svg";
+import { ReactComponent as MealBox } from "../../assets/images/food-colour.svg";
+import { ReactComponent as BowlIcon } from "../../assets/images/bowl-colour.svg";
 
 import DeliveryModal from "../../components/account/delivery-modal.jsx";
 import MealPlanModal from "../../components/account/meal-modal.jsx";
@@ -120,11 +121,11 @@ class AccountPage extends React.Component {
         <div className="grid md:grid-cols-3 gap-5 md:gap-4 xl:gap-10 grid-cols-1">
           {sectionHeader(
             "nextExpanded",
-            DeliveryBox,
+              MealBox,
             "Next Delivery",
             DeliveryModal
           )}
-          {sectionHeader("mealExpanded", MealBox, "Meal Plan", MealPlanModal)}
+          {sectionHeader("mealExpanded", BowlIcon, "Meal Plan", MealPlanModal)}
           {sectionHeader(
             "frequencyExpanded",
             DeliveryBox,
