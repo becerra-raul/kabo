@@ -81,12 +81,14 @@ export const user = (state = initialState, action) => {
     case userConstants.PAUSE_SUBSCRIPTION_REQUESTED:
       return {
         ...state,
-        ...action.payload,
-        loading: true,
+        pauseInfo: action.payload,
+        loadingKeys: {...state.loadingKeys, [userConstants.PAUSE_SUBSCRIPTION_REQUESTED]: true},
+        error: false,
       };
     case userConstants.PAUSE_SUBSCRIPTION_SUCCESS:
       let nextState = {...state};
       if (action.payload.subscription.id) {
+        //setting new state directly in subscriptions object
         nextState.subscriptions[action.payload.subscription.id] = {
           ...nextState.subscriptions[action.payload.subscription.id],
           ...action.payload.subscription
@@ -94,7 +96,6 @@ export const user = (state = initialState, action) => {
       }
       return {
         ...nextState,
-        loading: false,
         error: false,
       };
 

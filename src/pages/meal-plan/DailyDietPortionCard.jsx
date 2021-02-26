@@ -18,7 +18,7 @@ const DietPortionCard = ({ item, handleSelect, dietPortion }) => {
           : " flex flex-col w-full  p-2 items-center bg-white font-messina relative rounded-lg border border-gray-200"
       }
     >
-      <div className="w-2/5 relative">
+      <div className="flex w-2/5 relative mb-4">
         {thenum === 100 && <img src='/diet-logo.png' className="absolute w-3/4" style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }} />}
 
         {thenum > 100 && <img src='/plus.png' className="absolute h-1/3" style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }} />}

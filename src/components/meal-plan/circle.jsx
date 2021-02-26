@@ -5,7 +5,6 @@ export const CircleSVG = ({ num }) => (
     height="100%"
     width="100%"
     viewBox="0 0 60 60"
-    style={{ marginBottom: '1rem' }}
     xmlns="http://www.w3.org/2000/svg"
   >
     <circle r="30" cx="30" cy="30" fill="#dfdfdf" />

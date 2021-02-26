@@ -62,7 +62,7 @@ const DeliveryModal = ({
 
   let deliveryStatus;
   const nextDelivery = user.next_occurrencies[0];
-
+  const amountOfFood = user.amount_of_food;
   if (user.subscription_phase && user.subscription_phase.status && user.subscription_phase.status.includes('deliver')) {
     deliveryStatus = 3
   } else if (user.subscription_phase && user.subscription_phase.status && user.subscription_phase.status.includes('prepar')) {
@@ -104,7 +104,7 @@ const DeliveryModal = ({
           {dogsLength > 1 && (
             <DogSelector dogs={dogs} setDog={setDog} dogIndex={dogIndex} />
           )}
-          <MealPlanCard dogIndex={dogIndex} nextDelivery={nextDelivery} />
+          <MealPlanCard dogIndex={dogIndex} nextDelivery={nextDelivery} amountOfFood={amountOfFood}/>
           <nav aria-label="Progress">
             <Stepper
               labels={[

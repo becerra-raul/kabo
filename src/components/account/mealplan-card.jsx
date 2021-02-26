@@ -10,7 +10,8 @@ const MealIcon = ({ source, notFirst }) => (
   />
 );
 
-const MealPlanCard = ({ noPrice, cooked_recipes, kibble_recipes, subscription, currentDog, nextDelivery }) => {
+const MealPlanCard = ({ noPrice, cooked_recipes, kibble_recipes, subscription, currentDog, nextDelivery ,amountOfFood}) => {
+  
   if (!cooked_recipes || !kibble_recipes) return null;
 
   let recipeArray = [];
@@ -74,7 +75,7 @@ const MealPlanCard = ({ noPrice, cooked_recipes, kibble_recipes, subscription, c
     portion = `${currentDog.cooked_portion}% Kabo`;
   } else {
     portion = `${currentDog.cooked_portion ? currentDog.cooked_portion : 0}% fresh food & ${
-      currentDog.kibble_portion ? currentDog.kibble_portion : 0} kibble`;
+      currentDog.kibble_portion ? currentDog.kibble_portion : 0}% kibble`;
   }
 
   let price = subscription
@@ -94,7 +95,7 @@ const MealPlanCard = ({ noPrice, cooked_recipes, kibble_recipes, subscription, c
           <div className="flex items-center">
             {iconArray}
             <div className="ml-4 md:ml-4 xl:pr-9">
-              <p className="font-normal text-17 leading-24">{readableRecipe}</p>
+              <p className="font-normal text-17 leading-24">{readableRecipe}{amountOfFood && ' for ' + amountOfFood.split("_").join(" ") }</p>
             </div>
           </div>
           <div className="flex justify-between mt-6">

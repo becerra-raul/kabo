@@ -53,10 +53,10 @@ class AccountPage extends React.Component {
     const { user, subscriptions, dogs, globalState } = this.props;
 
     let dogNames = dogs.map((dog, i) => {
-      return dog.name;
+      return dog.name + `'s`;
     });
 
-    let readableNames = dogNames.join(" and ");
+    let readableNames = dogNames.join(" + ");
     let dogSubscription = userSelectors.selectSubscriptionByDogIndex(
       globalState,
       this.state.dogsIndex
@@ -113,7 +113,7 @@ class AccountPage extends React.Component {
               {profileImages}
             </div>
             <div className="h-full text-xl text-center md:text-left font-bold md:m-6 font-messina">
-              {readableNames}'s
+              {readableNames} plan
             </div>
           </div>
         </div>
