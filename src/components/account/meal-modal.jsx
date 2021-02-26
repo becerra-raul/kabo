@@ -1,9 +1,11 @@
 import React from "react";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 
 import DogSelector from "./dog-selector";
 import MealPlanCard from "./mealplan-card";
 import PortionDisplay from "./portion-display";
+import { userSelectors } from "../../selectors/user.selectors";
+
 
 class MealPlanModal extends React.Component {
   constructor(props) {
@@ -25,10 +27,16 @@ class MealPlanModal extends React.Component {
     const { dogIndex } = this.state;
     const {
       dogs,
+      subscriptions
     } = this.props;
     const dogsLength = dogs.length;
     const currentDog = dogs[dogIndex];
-    const { portion } = currentDog;
+    const { portion_adjustment, cooked_portion, kibble_portion } = currentDog;
+
+    let cbID = currentDog.chargebee_subscription_id
+    let status = subscriptions[cbID].status
+    let inTrial = status.includes('future') || status.includes('trial')
+    let portion = portion_adjustment === 'higher' ? 110 : cooked_portion ? cooked_portion : 0;
 
     return (
       <>
@@ -37,15 +45,19 @@ class MealPlanModal extends React.Component {
             <DogSelector dogs={dogs} setDog={this.setDog} dogIndex={dogIndex} />
           )}
           <MealPlanCard dogIndex={dogIndex} portion={portion} />
-          <div className="text-primary w-full font-bold">
-            <a href={`/edit-plan/${dogIndex}`}>
-              Select a different meal plan
+          {!inTrial && (
+            <div className="text-primary w-full font-bold">
+              <a href={`/edit-plan/${dogIndex}`}>
+                Select a different meal plan
             </a>
-          </div>
-          <div className="text-lightGrey text-xs text-semibold mt-7">
-            PORTIONS
-          </div>
-          <PortionDisplay portion={portion} />
+            </div>
+          )}
+          {!kibble_portion ? <React.Fragment>
+            <div className="text-lightGrey text-xs text-semibold mt-7">
+              PORTIONS
+            </div>
+            <PortionDisplay portion={portion} />
+          </React.Fragment> : null}
         </div>
       </>
     );
@@ -55,6 +67,7 @@ class MealPlanModal extends React.Component {
 const mapStateToProps = (state) => {
   const { dogs } = state.user;
   return {
+    subscriptions: userSelectors.selectSubscriptions(state),
     dogs,
   };
 };

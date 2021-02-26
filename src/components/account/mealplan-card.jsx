@@ -73,7 +73,8 @@ const MealPlanCard = ({ noPrice, cooked_recipes, kibble_recipes, subscription, c
   } else if (!currentDog.kibble_portion) {
     portion = `${currentDog.cooked_portion}% Kabo`;
   } else {
-    portion = `${currentDog.cooked_portion}% fresh food & ${currentDog.kibble_portion}% kibble`;
+    portion = `${currentDog.cooked_portion ? currentDog.cooked_portion : 0}% fresh food & ${
+      currentDog.kibble_portion ? currentDog.kibble_portion : 0} kibble`;
   }
 
   let price = subscription

@@ -57,8 +57,6 @@ const DeliveryModal = ({
 }) => {
   let readableNames = dogs && dogs.map((dog) => dog.name).join(' and ')
 
-  console.log(dogSubscription)
-
   const PAUSED = dogSubscription.status == "paused";
   const CANCELLED = dogSubscription.status == 'cancelled'
 
